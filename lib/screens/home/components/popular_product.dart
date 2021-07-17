@@ -22,7 +22,7 @@ class PopularProducts extends StatelessWidget {
             shrinkWrap: true,
             physics:NeverScrollableScrollPhysics(),
             itemBuilder: (context,index){
-
+            
               return ProductCard(product: demoProducts[index]);
             },
             itemCount: demoProducts.length,

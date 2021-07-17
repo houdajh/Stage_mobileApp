@@ -28,7 +28,7 @@ class ProductCard extends StatelessWidget {
         child: GestureDetector(// hadi bax ndoz la page detail
           onTap: () => Navigator.pushNamed(
             context,
-            DetailsScreen.routeName,
+            DetailPage.routeName,
             arguments: ProductDetailsArguments(product: product),
           ),
           child: Container(
