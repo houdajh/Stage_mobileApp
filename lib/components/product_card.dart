@@ -166,7 +166,7 @@ class ProductCard extends StatelessWidget {
                                     Icon(Icons.star_border,color: Colors.red,size: 15,)
                                   ],
                                 ),
-                                Text(product.rating.toString()+' reviews',
+                                Text(product.oldPrice.toString()+' reviews',
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w900,
