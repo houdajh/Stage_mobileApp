@@ -66,8 +66,18 @@ class ProductCard extends StatelessWidget {
 
                               child: Column(
                                 children: [
-                                  Image(image: NetworkImage(e),fit: BoxFit.cover,width: double.infinity,height: 350,),
-                                  Container(color: Colors.white,)
+                               ClipRect(
+                                  child: InteractiveViewer(
+                                    minScale: 0.1,
+                                    maxScale: 2.6,
+                                    panEnabled: true,
+                                    alignPanAxis: true,
+                                    scaleEnabled: true,
+                                    constrained: true,
+
+                                        child:Image(image: NetworkImage(e),fit: BoxFit.cover,width: double.infinity,height: 350,),
+                              ),),
+                              Container(color: Colors.white,)
                                 ],
                               ),
                             ),
