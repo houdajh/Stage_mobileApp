@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/cart/cart_screen.dart';
+import 'package:shop_app/screens/search/search.dart';
 import '../../../size_config.dart';
 import 'icon_btn_with_counter.dart';
 import 'search_field.dart';
@@ -8,7 +9,6 @@ class HomeHeader extends StatelessWidget {
   const HomeHeader({
     Key key,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,7 +31,7 @@ class HomeHeader extends StatelessWidget {
             padding: const EdgeInsets.only(left: 12.0),
             child: IconBtnWithCounter(
               svgSrc: "assets/icons/Search Icon.svg",
-              press: () {},
+              press: () {return Navigator.pushNamed(context, PastTripsView.routeName);},
             ),
           ),
         ],
