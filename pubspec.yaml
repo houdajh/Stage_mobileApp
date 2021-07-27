@@ -35,6 +35,8 @@ dependencies:
   flutter_svg: ^0.19.1 # help us to use SVG in our app
   provider: ^4.3.1 # for State management
   comment_box: ^0.0.16
+  like_button: ^2.0.2
+  loading_more_list: ^4.0.1
 
 dev_dependencies:
   flutter_test:

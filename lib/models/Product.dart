@@ -19,7 +19,7 @@ class Product {
     this.isPopular = true,
     @required this.title,
     @required this.price,
-    @required this.description,
+    @required this.description, countlikes,
   });
 }
 
@@ -121,7 +121,9 @@ class Products with ChangeNotifier {
               price: element.data()['prix'],
               images: element.data()['images'],
               oldPrice:element.data()['oldPrix'],
-        ));
+              countlikes:element.data()['countlikes'],
+        )
+        );
         // element.data()['images'].forEach((e){
         //   print(e);
 

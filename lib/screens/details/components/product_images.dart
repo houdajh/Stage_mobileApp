@@ -20,10 +20,12 @@ class _ProductImagesState extends State<ProductImages> {
   int selectedImage = 0;
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Column(
       children: [
         SizedBox(
-          width: getProportionateScreenWidth(238),
+          width: double.infinity,
+          height: size.height * 0.5,
           child: AspectRatio(
             aspectRatio: 1,
             child: Hero(
