@@ -22,13 +22,18 @@ class PopularProducts extends StatelessWidget {
           snapshot.data.docs.forEach((element) {
             print("iamge :");
             print(element["images"]);
-            demoProducts.add(Product(id: "${i++}",
+            demoProducts.add(Product(
+                id: "${i++}",
                 images: element["images"],
                 colors: [],
                 title: element["titre"],
                 price: element["prix"].toDouble(),
-                description: element["description"]));
-          });
+                description: element["description"],
+                countlikes:element.data()['countlikes']
+                )
+                );
+          }
+          );
           print("@@@@@@@@@@@@@@@@@@@@@@");
           return Column(
             children: [

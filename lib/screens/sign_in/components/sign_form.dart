@@ -1,10 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/custom_surfix_icon.dart';
 import 'package:shop_app/components/form_error.dart';
 import 'package:shop_app/helper/keyboard.dart';
 import 'package:shop_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:shop_app/screens/login_success/login_success_screen.dart';
-
+import 'package:awesome_dialog/awesome_dialog.dart';
 import '../../../components/default_button.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -15,11 +16,45 @@ class SignForm extends StatefulWidget {
 }
 
 class _SignFormState extends State<SignForm> {
-  final _formKey = GlobalKey<FormState>();
-  String email;
-  String password;
+  GlobalKey<FormState> formstate = new GlobalKey<FormState>();
+  String myemail;
+  String mypassword;
   bool remember = false;
   final List<String> errors = [];
+
+  signIn() async {
+    var formdata = formstate.currentState;
+    if (formdata.validate()) {
+      formdata.save();
+
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: myemail, password: mypassword);
+        return userCredential;
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          print('No user found for that email.');
+          AwesomeDialog(
+              context: context,
+              title: "Error",
+              body: Text("No user found for that email"))
+            ..show();
+          return null;
+        } else if (e.code == 'wrong-password') {
+          print('Wrong password provided for that user.');
+          AwesomeDialog(
+              context: context,
+              title: "Error",
+              body: Text("Wrong password provided for that user"))
+            ..show();
+          return null;
+        }
+      }
+    } else {
+      print("NOT VALID");
+      return null;
+    }
+  }
 
   void addError({String error}) {
     if (!errors.contains(error))
@@ -38,7 +73,7 @@ class _SignFormState extends State<SignForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: formstate,
       child: Column(
         children: [
           buildEmailFormField(),
@@ -72,12 +107,20 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
             text: "Continue",
-            press: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                // if all are valid then go to success screen
-                KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+            press: () async {
+              if (formstate.currentState.validate()) {
+                formstate.currentState.save();
+                UserCredential resp = await signIn();
+                if (resp != null) {
+                  Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                  print("===============");
+                  print(resp.user.email);
+                  print("===============");
+                  // if all are valid then go to success screen
+
+                } else {
+                  print("error");
+                }
               }
             },
           ),
@@ -89,11 +132,11 @@ class _SignFormState extends State<SignForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
+      onSaved: (newValue) => mypassword = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
+        } else if (value.length >= 6) {
           removeError(error: kShortPassError);
         }
         return null;
@@ -102,7 +145,7 @@ class _SignFormState extends State<SignForm> {
         if (value.isEmpty) {
           addError(error: kPassNullError);
           return "";
-        } else if (value.length < 8) {
+        } else if (value.length < 6) {
           addError(error: kShortPassError);
           return "";
         }
@@ -122,7 +165,7 @@ class _SignFormState extends State<SignForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      onSaved: (newValue) => myemail = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kEmailNullError);

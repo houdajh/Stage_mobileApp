@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shop_app/components/default_button.dart';
@@ -31,6 +32,7 @@ class Body extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           ProductImages(product: product),
+         // Icon(Icons.favorite, color: Colors.black , size: 80.0 ),
           Container(
             
             width: double.infinity,
@@ -136,7 +138,9 @@ class Body extends StatelessWidget {
              // color: Color(0xFFFF4848) ,
              // height: getProportionateScreenWidth(16),
            // ),
-            child: LikeButton(onTap: onLikeButtonTapped,
+           
+            child: LikeButton(
+             // onTap: onLikeButtonTapped,
                             size: 20,
                             circleColor:
                             CircleColor(start: Colors.pink, 
@@ -147,186 +151,190 @@ class Body extends StatelessWidget {
                             ),
                             likeBuilder: (bool isLiked) {
                               return Icon(
-                                Icons.favorite,
-                                color: isLiked ? Colors.red
+                                 Icons.favorite,
+                                 color: isLiked ?
+                                 Colors.red
                                 : Colors.grey,
-                                size: 20,
+                                size: 30,
                               );
-                            },
-                            //likeCount: news[index].count_like,
-                            countBuilder: (int count, bool isLiked, String text) {
-                              var color = isLiked ? Colors.grey[700]
-                               : Colors.grey[600];
-                              Widget result;
-                              if (isLiked) {
-                                result = Text(
-                                  "love",
-                                  style: TextStyle(color: color),
-                                );
-                              } else
-                                result = Text(
-                                  text,
-                                  style: TextStyle(color: color),
-                                );
-                              return result;
-                            },
-          ),
-                  
-                              ),
-                              
-                            ),
-                            
-                        SizedBox(
-                          height: 20,
-                        ),
-      
-      
-                        Text(product.title,style: TextStyle(fontWeight:FontWeight.bold,fontSize:  20.0,color: Colors.black,),maxLines: 2,
-                              ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          
-                          children: <Widget>[
-                            Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80"),
-                                      fit: BoxFit.cover)),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  "Jean-Luis",
-                                  style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  height: 3,
-                                ),
-                                Text(
-                                  "Interior Design",
-                                  style: TextStyle(fontSize: 13),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                        SizedBox(height: 20,),
-            
-              
-      
-      
-                        Row(
-                          children: <Widget>[
-                           // Container(
-                             // decoration: BoxDecoration(
-                               //   border: Border.all(color: Colors.grey),
-                               //   borderRadius: BorderRadius.circular(3)),
-                             // child: Padding(
-                              //  padding: const EdgeInsets.all(6.0),
-                              //  child: Text("Interior"),
-                             // ),
-                           // ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                           // Container(
-                             // decoration: BoxDecoration(
-                                //  border: Border.all(color: Colors.grey),
-                                //  borderRadius: BorderRadius.circular(3)),
-                              //child: Padding(
-                              //  padding: const EdgeInsets.all(6.0),
-                              //  child: Text("40m2"),
-                             // ),
-                          //  ),
-                             SizedBox(
-                              width: 20,
-                            ),
-                           // Container(
-                             // decoration: BoxDecoration(
-                                 // border: Border.all(color: Colors.grey),
-                                //  borderRadius: BorderRadius.circular(3)),
-                              //child: Padding(
-                              //  padding: const EdgeInsets.all(6.0),
-                              //  child: Text("Ideas"),
-                             // ),
-                           // )
-                          ],
-                        ),
-                        SizedBox(height: 20,),
-                        Text(product.description,style: TextStyle(fontSize:  15.0,fontWeight: FontWeight.w300,fontStyle:FontStyle.italic,height: 1.5,),maxLines: 5,
-                                  overflow: TextOverflow.ellipsis,),
-                                           
-       Align(
-                alignment: Alignment.centerRight,
-                child:Container(
-                padding: EdgeInsets.all(getProportionateScreenWidth(15)),
-                  width: getProportionateScreenWidth(64),
-                  height: getProportionateScreenWidth(64),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFFFE6E6),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                    ),
-                  ),  
-                  
-                  child:  IconButton(
-                  icon:SvgPicture.asset(
-                    "assets/icons/Conversation.svg",
-                    color: Color(0xFFFF4848) ,
-                    height: getProportionateScreenWidth(16),
-                  ), 
-      
-      
-      
-      
-                  onPressed: () {
-                        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TestMe()),
-        );
-      
-                    },
-                  ), 
-                  ),  
-                   ), 
-                       DefaultButton(
-                                text: "order",
-                                press: () {},
-                              ),
-                        
-                       
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          );
-        }
-      
-       Future<bool> onLikeButtonTapped(bool isLiked) async{
-    /// send your request here
-    // final bool success= await sendRequest();
-    int count=0;
-    if(isLiked == true) {
-      count++;
-    }
-    print(count);
-    /// if failed, you can do nothing
-    // return success? !isLiked:isLiked;
-
-    return !isLiked;
-  }
-}
+                              onPressed: (){
+                                _incrementCounter();
+              };
+                            },                        
+                                            ),
+                                                   
+                                                                ),
+                                                                
+                                                              ),
+                                                              
+                                                          SizedBox(
+                                                            height: 20,
+                                                          ),
+                                        
+                                        
+                                                          Text(product.title,style: TextStyle(fontWeight:FontWeight.bold,fontSize:  20.0,color: Colors.black,),maxLines: 2,
+                                                                ),
+                                                          SizedBox(
+                                                            height: 20,
+                                                          ),
+                                                          Row(
+                                                            
+                                                            children: <Widget>[
+                                                              Container(
+                                                                width: 40,
+                                                                height: 40,
+                                                                decoration: BoxDecoration(
+                                                                    shape: BoxShape.circle,
+                                                                    image: DecorationImage(
+                                                                        image: NetworkImage(
+                                                                            "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80"),
+                                                                        fit: BoxFit.cover)),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 20,
+                                                              ),
+                                                              Column(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: <Widget>[
+                                                                  Text(
+                                                                    "Jean-Luis",
+                                                                    style: TextStyle(
+                                                                        fontSize: 16, fontWeight: FontWeight.bold),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 3,
+                                                                  ),
+                                                                  Text(
+                                                                    "Interior Design",
+                                                                    style: TextStyle(fontSize: 13),
+                                                                  )
+                                                                ],
+                                                              )
+                                                            ],
+                                                          ),
+                                                          SizedBox(height: 20,),
+                                              
+                                                
+                                        
+                                        
+                                                          Row(
+                                                            children: <Widget>[
+                                                             // Container(
+                                                               // decoration: BoxDecoration(
+                                                                 //   border: Border.all(color: Colors.grey),
+                                                                 //   borderRadius: BorderRadius.circular(3)),
+                                                               // child: Padding(
+                                                                //  padding: const EdgeInsets.all(6.0),
+                                                                //  child: Text("Interior"),
+                                                               // ),
+                                                             // ),
+                                                              SizedBox(
+                                                                width: 20,
+                                                              ),
+                                                             // Container(
+                                                               // decoration: BoxDecoration(
+                                                                  //  border: Border.all(color: Colors.grey),
+                                                                  //  borderRadius: BorderRadius.circular(3)),
+                                                                //child: Padding(
+                                                                //  padding: const EdgeInsets.all(6.0),
+                                                                //  child: Text("40m2"),
+                                                               // ),
+                                                            //  ),
+                                                               SizedBox(
+                                                                width: 20,
+                                                              ),
+                                                             // Container(
+                                                               // decoration: BoxDecoration(
+                                                                   // border: Border.all(color: Colors.grey),
+                                                                  //  borderRadius: BorderRadius.circular(3)),
+                                                                //child: Padding(
+                                                                //  padding: const EdgeInsets.all(6.0),
+                                                                //  child: Text("Ideas"),
+                                                               // ),
+                                                             // )
+                                                            ],
+                                                          ),
+                                                          SizedBox(height: 20,),
+                                                          Text(product.description,style: TextStyle(fontSize:  15.0,fontWeight: FontWeight.w300,fontStyle:FontStyle.italic,height: 1.5,),maxLines: 5,
+                                                                    overflow: TextOverflow.ellipsis,),
+                                                                             
+                                         Align(
+                                                  alignment: Alignment.centerRight,
+                                                  child:Container(
+                                                  padding: EdgeInsets.all(getProportionateScreenWidth(15)),
+                                                    width: getProportionateScreenWidth(64),
+                                                    height: getProportionateScreenWidth(64),
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xFFFFE6E6),
+                                                      borderRadius: BorderRadius.only(
+                                                        topLeft: Radius.circular(20),
+                                                        bottomLeft: Radius.circular(20),
+                                                      ),
+                                                    ),  
+                                                    
+                                                    child:  IconButton(
+                                                    icon:SvgPicture.asset(
+                                                      "assets/icons/Conversation.svg",
+                                                      color: Color(0xFFFF4848) ,
+                                                      height: getProportionateScreenWidth(16),
+                                                    ), 
+                                        
+                                        
+                                        
+                                        
+                                                    onPressed: () {
+                                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => TestMe()),
+                                          );
+                                        
+                                                      },
+                                                    ), 
+                                                    ),  
+                                                     ), 
+                                                         DefaultButton(
+                                                                  text: "order",
+                                                                  press: () {},
+                                                                ),
+                                                          
+                                                         
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          }
+                                        
+                                         Future<bool> onLikeButtonTapped(bool isLiked) async{
+                                      /// send your request here
+                                      // final bool success= await sendRequest();
+                                      int count=0;
+                                      if(isLiked == true) {
+                                        count++;
+                                      }
+                                      print(count);
+                                      /// if failed, you can do nothing
+                                      // return success? !isLiked:isLiked;
+                                  
+                                      return !isLiked;
+                                    }
+                                  
+                                    void _incrementCounter() {
+                                      FirebaseFirestore.instance.collection("produits").snapshots();
+                                      builder: (context, snapshot) {
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                              return Center(child: CircularProgressIndicator(color: Colors.red,));
+                                      }
+                                      snapshot.data.docs.forEach((element) {
+                                         //print("iamge :");
+                                         //  print(element["images"]);
+                                       //demoProducts.add(
+                                                // );
+                                            }
+                                      );
+                                        };
+                                         }
+                                    }
+                                    

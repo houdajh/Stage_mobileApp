@@ -37,6 +37,8 @@ dependencies:
   comment_box: ^0.0.16
   like_button: ^2.0.2
   loading_more_list: ^4.0.1
+  awesome_dialog: ^2.1.0
+  google_sign_in: ^5.0.5
 
 dev_dependencies:
   flutter_test:

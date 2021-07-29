@@ -3,9 +3,9 @@ import 'package:shop_app/components/custom_surfix_icon.dart';
 import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/components/form_error.dart';
 import 'package:shop_app/screens/otp/otp_screen.dart';
-
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   @override
@@ -13,7 +13,7 @@ class CompleteProfileForm extends StatefulWidget {
 }
 
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
-  final _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formstate = new GlobalKey<FormState>();
   final List<String> errors = [];
   String firstName;
   String lastName;
@@ -37,7 +37,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: formstate,
       child: Column(
         children: [
           buildFirstNameFormField(),
@@ -51,10 +51,20 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "continue",
-            press: () {
-              if (_formKey.currentState.validate()) {
-                Navigator.pushNamed(context, OtpScreen.routeName);
+            press: () async {
+              var formdata = formstate.currentState;
+
+              if (formdata.validate()) {
+                formdata.save();
               }
+              CollectionReference usersRef =
+                  FirebaseFirestore.instance.collection("users");
+              usersRef.doc("12346512").set({
+                "address": address,
+                "last_name": lastName,
+                "first_name": firstName,
+                "phone_number": phoneNumber
+              });
             },
           ),
         ],

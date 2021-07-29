@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/custom_surfix_icon.dart';
 import 'package:shop_app/components/default_button.dart';
@@ -7,19 +8,42 @@ import 'package:shop_app/screens/complete_profile/complete_profile_screen.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
-
 class SignUpForm extends StatefulWidget {
   @override
   _SignUpFormState createState() => _SignUpFormState();
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  final _formKey = GlobalKey<FormState>();
-  String email;
-  String password;
+  GlobalKey<FormState> formstate = new GlobalKey<FormState>();
+  String myemail;
+  String mypassword;
   String conform_password;
   bool remember = false;
   final List<String> errors = [];
+  signUP() async {
+    var formdata = formstate.currentState;
+    if (formdata.validate()) {
+      formdata.save();
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+                email: myemail, password: mypassword);
+        return userCredential;
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          print('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          print('The account already exists for that email.');
+        }
+      } catch (e) {
+        print(e);
+      }
+      // if all are valid then go to success screen
+
+    } else {
+      print("NOT VALID");
+    }
+  }
 
   void addError({String error}) {
     if (!errors.contains(error))
@@ -38,7 +62,7 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: formstate,
       child: Column(
         children: [
           buildEmailFormField(),
@@ -50,11 +74,20 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "Continue",
-            press: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+            press: () async {
+              var formdata = formstate.currentState;
+              if (formdata.validate()) {
+                formdata.save();
+                UserCredential resp = await signUP();
+                if (resp != null) {
+                  print("===============");
+                  print(resp.user.email);
+                  print("===============");
+                  Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                } else {
+                  print('error');
+                  addError(error: AcountExists);
+                }
               }
             },
           ),
@@ -70,7 +103,7 @@ class _SignUpFormState extends State<SignUpForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.isNotEmpty && password == conform_password) {
+        } else if (value.isNotEmpty && mypassword == conform_password) {
           removeError(error: kMatchPassError);
         }
         conform_password = value;
@@ -79,7 +112,7 @@ class _SignUpFormState extends State<SignUpForm> {
         if (value.isEmpty) {
           addError(error: kPassNullError);
           return "";
-        } else if ((password != value)) {
+        } else if ((mypassword != value)) {
           addError(error: kMatchPassError);
           return "";
         }
@@ -99,20 +132,20 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
+      onSaved: (newValue) => mypassword = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
+        } else if (value.length >= 4) {
           removeError(error: kShortPassError);
         }
-        password = value;
+        mypassword = value;
       },
       validator: (value) {
         if (value.isEmpty) {
           addError(error: kPassNullError);
           return "";
-        } else if (value.length < 8) {
+        } else if (value.length < 4) {
           addError(error: kShortPassError);
           return "";
         }
@@ -132,7 +165,7 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      onSaved: (newValue) => myemail = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kEmailNullError);

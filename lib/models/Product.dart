@@ -8,18 +8,18 @@ class Product {
   final List<dynamic> images;
   final List<Color> colors;
   final double oldPrice, price;
-  final bool isFavourite, isPopular;
+  final int countlikes;
 
   Product({
     @required this.id,
     @required this.images,
     @required this.colors,
     this.oldPrice = 0.0,
-    this.isFavourite = true,
-    this.isPopular = true,
+    this.countlikes ,
+    //this.isPopular = true,
     @required this.title,
     @required this.price,
-    @required this.description, countlikes,
+    @required this.description ,
   });
 }
 
@@ -101,9 +101,6 @@ List<Product>  demoProducts = [
   //   isPopular: true,
   // ),
 ];
-
-const String description =
-    "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
 
 
 

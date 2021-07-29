@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:like_button/like_button.dart';
 import 'package:shop_app/models/Product.dart';
 import 'package:shop_app/screens/details/details_screen.dart';
 
@@ -83,7 +84,31 @@ class ProductCard extends StatelessWidget {
                                 onPressed: (){
 
                                 },
-                                child: Icon(Icons.favorite_border,color:Colors.red[400]),)),//botton like
+                              // child: Icon(Icons.favorite_border,color:Colors.red[400]),
+                              child: LikeButton(
+             // onTap: onLikeButtonTapped,
+                            size: 20,
+                            circleColor:
+                            CircleColor(start: Colors.pink, 
+                            end: Colors.pinkAccent),
+                            bubblesColor: BubblesColor(
+                              dotPrimaryColor: Colors.red,
+                              dotSecondaryColor: Colors.redAccent,
+                            ),
+                            likeBuilder: (bool isLiked) {
+                              return Icon(
+                                 Icons.favorite,
+                                 color: isLiked ?
+                                 Colors.red
+                                : Colors.grey,
+                                size:40,
+                              );
+        
+                            },                        
+                                            ),
+                               )
+                               ),//botton like
+                                
                           Container(
                               color: Colors.red,
                               child: Padding(
