@@ -16,14 +16,12 @@ class PopularProducts extends StatelessWidget {
             return Center(child: CircularProgressIndicator(color: Colors.red,));
           }
           // var docs=snapshot.data();
-          print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-          int i = 8;
-          print(snapshot.data.docs[0]["images"]);
+          
+          demoProducts=[];
           snapshot.data.docs.forEach((element) {
-            print("iamge :");
-            print(element["images"]);
-            demoProducts.add(Product(
-                id: "${i++}",
+            demoProducts.add(
+                Product(
+                id: element.id.toString(),
                 images: element["images"],
                 colors: [],
                 title: element["titre"],
@@ -34,6 +32,7 @@ class PopularProducts extends StatelessWidget {
                 );
           }
           );
+         
           print("@@@@@@@@@@@@@@@@@@@@@@");
           return Column(
             children: [
@@ -60,3 +59,24 @@ class PopularProducts extends StatelessWidget {
         });
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

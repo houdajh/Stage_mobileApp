@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,7 +10,7 @@ import '../constants.dart';
 import '../size_config.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({
+   ProductCard({
     Key key,
     this.width = 400,
     this.height: 585,
@@ -19,6 +20,10 @@ class ProductCard extends StatelessWidget {
 
   final double width, aspectRetio,height;
   final Product product;
+  CollectionReference usersRef =
+                  FirebaseFirestore.instance.collection("users");
+ CollectionReference postRef = FirebaseFirestore.instance.collection("produits");
+             
 
   @override
   Widget build(BuildContext context) {
@@ -85,27 +90,12 @@ class ProductCard extends StatelessWidget {
 
                                 },
                               // child: Icon(Icons.favorite_border,color:Colors.red[400]),
-                              child: LikeButton(
-             // onTap: onLikeButtonTapped,
-                            size: 20,
-                            circleColor:
-                            CircleColor(start: Colors.pink, 
-                            end: Colors.pinkAccent),
-                            bubblesColor: BubblesColor(
-                              dotPrimaryColor: Colors.red,
-                              dotSecondaryColor: Colors.redAccent,
-                            ),
-                            likeBuilder: (bool isLiked) {
-                              return Icon(
-                                 Icons.favorite,
-                                 color: isLiked ?
-                                 Colors.red
-                                : Colors.grey,
-                                size:40,
-                              );
-        
-                            },                        
-                                            ),
+                               child: SvgPicture.asset(
+              "assets/icons/Heart Icon_2.svg",
+              color: Color(0xFFFF4848) ,
+              height: getProportionateScreenWidth(16),
+            ),
+           
                                )
                                ),//botton like
                                 

@@ -8,6 +8,9 @@ import '../../../size_config.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CompleteProfileForm extends StatefulWidget {
+
+  
+
   @override
   _CompleteProfileFormState createState() => _CompleteProfileFormState();
 }
@@ -19,7 +22,17 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   String lastName;
   String phoneNumber;
   String address;
-
+  
+//  DocumentReference likesRef;
+ // Map<String , dynamic> data;
+ // CollectionReference postRef;
+// @override
+ ////void initState(){
+  // likesRef = FirebaseFirestore.instance.collection("likes").doc(phoneNumber);
+  // super.initState();
+ //  likesRef.get().then((value) => data = value.data() );
+ //  postRef = FirebaseFirestore.instance.collection("produits");
+// }
   void addError({String error}) {
     if (!errors.contains(error))
       setState(() {
@@ -56,10 +69,11 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
               if (formdata.validate()) {
                 formdata.save();
+                
               }
               CollectionReference usersRef =
                   FirebaseFirestore.instance.collection("users");
-              usersRef.doc("12346512").set({
+              usersRef.doc(phoneNumber).set({
                 "address": address,
                 "last_name": lastName,
                 "first_name": firstName,
