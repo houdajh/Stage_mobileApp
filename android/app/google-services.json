@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "392860188670",
+    "project_id": "jjfashion-ea132",
+    "storage_bucket": "jjfashion-ea132.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:392860188670:android:430c91676c64d66f0c4aaf",
+        "android_client_info": {
+          "package_name": "com.example.shop_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "392860188670-h8kdk7p0cfeonhirn6bme30iss11965i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shop_app",
+            "certificate_hash": "58605b7852c25dc72c375b69c233296a6c88b5e2"
+          }
+        },
+        {
+          "client_id": "392860188670-fkso0lgo1i37uscu04rus7jjb5gc5f4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9zJl1iba02qOmQO05qf9Ss7QdOQOV2pM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "392860188670-fkso0lgo1i37uscu04rus7jjb5gc5f4k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
