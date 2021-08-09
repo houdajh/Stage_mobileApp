@@ -62,14 +62,14 @@ class ProductSearchCard extends StatelessWidget {
                                 ],
                               ),
                           //botton like
-                              Container(
+                              product.oldPrice.toString()!="0.0"?Container(
                                 width: 100,
                                   color: Colors.redAccent.withOpacity(0.5),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(3.0),
+                                    padding:EdgeInsets.all(3.0),
                                     child: Text("DISCOUNT",style: TextStyle(color: Colors.white,fontSize: 11),textAlign: TextAlign.center,),
                                   )
-                              ),
+                              ):Text(""),
                             ],
                           ),
                         ),
@@ -85,8 +85,8 @@ class ProductSearchCard extends StatelessWidget {
                             children: [
                               Text("\$"+product.price.toString(),style: TextStyle(color: Colors.red[500],fontWeight: FontWeight.bold,fontSize: 20),),
                               SizedBox(width: 8,),
-                              Text(product.price.toString(),style: TextStyle(color: Colors.grey,fontSize: 15,
-                                  decoration: TextDecoration.lineThrough),),
+                              product.oldPrice.toString()!="0.0"? Text(product.oldPrice.toString(),style: TextStyle(color: Colors.grey,fontSize: 15,
+                                  decoration: TextDecoration.lineThrough),):Text(""),
 
                             ],
 

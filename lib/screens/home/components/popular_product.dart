@@ -15,28 +15,27 @@ class PopularProducts extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator(color: Colors.red,));
           }
-          // var docs=snapshot.data();
-          print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-          int i = 8;
-          print(snapshot.data.docs[0]["images"]);
+          demoProducts=[];
           snapshot.data.docs.forEach((element) {
-            print("iamge :");
-            print(element["images"]);
-            demoProducts.add(Product(id: "${i++}",
+            demoProducts.add(
+                Product(id: element.id.toString(),
                 images: element["images"],
                 colors: [],
+                categorieId: element["categorieId"],
                 title: element["titre"],
+                oldPrice: element.data()['oldPrix'].toDouble(),
                 price: element["prix"].toDouble(),
                 description: element["description"]));
+            print("****************");
+            print(element.data()['oldPrix'].toDouble());
           });
-          print("@@@@@@@@@@@@@@@@@@@@@@");
           return Column(
             children: [
               Padding(
                 padding:
                 EdgeInsets.symmetric(
                     horizontal: getProportionateScreenWidth(20)),
-                child: SectionTitle(title: "Popular Products", press: () {}),
+                child: SectionTitle(title: "Products", press: () {}),
               ),
               SizedBox(height: getProportionateScreenWidth(20)),
               SingleChildScrollView(
