@@ -10,7 +10,22 @@ class SignUpScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Sign Up"),
       ),
-      body: Body(),
+      body:Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+               Colors.red ,
+              Colors.grey[800],
+              Colors.white,
+              Colors.white,
+             
+            ],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft
+          )
+        ),
+         child: Body(),
+        )
     );
   }
 }

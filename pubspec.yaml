@@ -39,6 +39,9 @@ dependencies:
   loading_more_list: ^4.0.1
   awesome_dialog: ^2.1.0
   google_sign_in: ^5.0.5
+  firebase_storage: ^10.0.1
+  image_picker: ^0.8.3+2
+  alert_dialog: ^1.0.0
 
 dev_dependencies:
   flutter_test:

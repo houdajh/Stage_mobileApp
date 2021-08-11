@@ -4,34 +4,32 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 class Product {
   final String id;
-  final String title, description;
+  final String title, description,categorieId;
   final List<dynamic> images;
   final List<Color> colors;
   final double oldPrice, price;
   final int countlikes;
-  final String uid;
 
+  Product( {
 
-  Product({
     @required this.id,
     @required this.images,
     @required this.colors,
-    this.oldPrice = 0.0,
-    this.countlikes ,
-    //this.isPopular = true,
+    @required  this.oldPrice,
     @required this.title,
     @required this.price,
-    @required this.description ,
-    @required this.uid,
-
+    @required this.description,
+    @required this.categorieId,
+    this.countlikes ,
   });
 }
 
 // Our demo Products
 
-List<Product>  demoProducts = [
+List<Product>  demoProducts = [];
 
-];
+const String description =
+    "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
 
 
 
@@ -42,6 +40,8 @@ class Products with ChangeNotifier {
   getDataProduits() async{
     FirebaseFirestore.instance.collection("produits").snapshots().listen((event) {
       event.docs.forEach((element) {
+        print("****************");
+        print(element.data()['oldPrix']);
         productsList.add(Product(
               id: element.id,
               title: element.data()['title'],
@@ -49,10 +49,8 @@ class Products with ChangeNotifier {
               price: element.data()['prix'],
               images: element.data()['images'],
               oldPrice:element.data()['oldPrix'],
-              countlikes:element.data()['countlikes'],
-              uid:element.data()['uid'],
-        )
-        );
+              categorieId :element.data()['categorieId'],
+        ));
         // element.data()['images'].forEach((e){
         //   print(e);
 

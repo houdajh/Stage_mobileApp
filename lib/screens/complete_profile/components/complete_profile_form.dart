@@ -1,16 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/custom_surfix_icon.dart';
 import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/components/form_error.dart';
+import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/otp/otp_screen.dart';
+import 'package:shop_app/screens/profile/components/profile_pic.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CompleteProfileForm extends StatefulWidget {
-
-  
-
   @override
   _CompleteProfileFormState createState() => _CompleteProfileFormState();
 }
@@ -22,17 +22,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   String lastName;
   String phoneNumber;
   String address;
-  
-//  DocumentReference likesRef;
- // Map<String , dynamic> data;
- // CollectionReference postRef;
-// @override
- ////void initState(){
-  // likesRef = FirebaseFirestore.instance.collection("likes").doc(phoneNumber);
-  // super.initState();
- //  likesRef.get().then((value) => data = value.data() );
- //  postRef = FirebaseFirestore.instance.collection("produits");
-// }
+  String profileImage = "no profilePic";
+
   void addError({String error}) {
     if (!errors.contains(error))
       setState(() {
@@ -69,16 +60,20 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
               if (formdata.validate()) {
                 formdata.save();
-                
               }
+
               CollectionReference usersRef =
                   FirebaseFirestore.instance.collection("users");
-              usersRef.doc(phoneNumber).set({
+              await usersRef.doc(FirebaseAuth.instance.currentUser.uid).set({
                 "address": address,
                 "last_name": lastName,
                 "first_name": firstName,
-                "phone_number": phoneNumber
+                "phone_number": phoneNumber,
+                "profileImage": profileImage,
+                "uid": FirebaseAuth.instance.currentUser.uid
               });
+              print("done");
+              await Navigator.pushNamed(context, HomeScreen.routeName);
             },
           ),
         ],

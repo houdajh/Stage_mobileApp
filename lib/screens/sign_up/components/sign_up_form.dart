@@ -17,7 +17,8 @@ class _SignUpFormState extends State<SignUpForm> {
   GlobalKey<FormState> formstate = new GlobalKey<FormState>();
   String myemail;
   String mypassword;
-  String conform_password;
+  String confirm_password;
+  String profileImage;
   bool remember = false;
   final List<String> errors = [];
   signUP() async {
@@ -99,14 +100,14 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildConformPassFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => conform_password = newValue,
+      onSaved: (newValue) => confirm_password = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.isNotEmpty && mypassword == conform_password) {
+        } else if (value.isNotEmpty && mypassword == confirm_password) {
           removeError(error: kMatchPassError);
         }
-        conform_password = value;
+        confirm_password = value;
       },
       validator: (value) {
         if (value.isEmpty) {
@@ -126,6 +127,10 @@ class _SignUpFormState extends State<SignUpForm> {
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
       ),
+       style: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+          ),
     );
   }
 

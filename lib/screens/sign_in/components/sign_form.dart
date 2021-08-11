@@ -91,14 +91,20 @@ class _SignFormState extends State<SignForm> {
                   });
                 },
               ),
-              Text("Remember me"),
+              Text("Remember me",
+              style: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+          ),),
               Spacer(),
               GestureDetector(
                 onTap: () => Navigator.pushNamed(
                     context, ForgotPasswordScreen.routeName),
                 child: Text(
                   "Forgot Password",
-                  style: TextStyle(decoration: TextDecoration.underline),
+                 
+                  style: TextStyle(decoration: TextDecoration.underline,
+                   color: Colors.black,),
                 ),
               )
             ],
@@ -190,8 +196,12 @@ class _SignFormState extends State<SignForm> {
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg",),
       ),
+      style: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+          ),
     );
   }
 }

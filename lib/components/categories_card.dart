@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/models/Categories.dart';
+import 'package:shop_app/screens/produitCategories/categories_produits_liste_screen.dart';
 
 import '../size_config.dart';
 class SpecialOfferCard extends StatelessWidget {
   const SpecialOfferCard({
     Key key,
-    @required this.category,
-    @required this.image,
-    @required this.numOfBrands,
-    @required this.press,
+    this.categorie,
   }) : super(key: key);
 
-  final String category, image;
-  final int numOfBrands;
-  final GestureTapCallback press;
+  final Categorie categorie;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
       child: GestureDetector(
-        onTap: press,
+    child: GestureDetector(// hadi bax ndoz la page detail
+          onTap: () => Navigator.pushNamed(
+            context,
+            CategoriesLsiteProduits.routeName,
+            arguments: ProductCategoriesArguments(categorie: categorie),
+          ),
         child: SizedBox(
           width: 220,
           height: 120,
@@ -27,8 +29,11 @@ class SpecialOfferCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: Stack(
               children: [
-                Image(image: NetworkImage(image),
-                  width: 270,height: 120,fit: BoxFit.cover,),
+                Hero(
+                  tag: categorie.id.toString(),
+                  child: Image(image: NetworkImage(categorie.image),
+                    width: 270,height: 120,fit: BoxFit.cover,),
+                ),
                 Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -51,13 +56,12 @@ class SpecialOfferCard extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                       children: [
                         TextSpan(
-                          text: "$category\n",
+                          text: categorie.title,
                           style: TextStyle(
                             fontSize: getProportionateScreenWidth(18),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        TextSpan(text: "$numOfBrands Brands")
                       ],
                     ),
                   ),
@@ -67,6 +71,9 @@ class SpecialOfferCard extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }
+
+
+

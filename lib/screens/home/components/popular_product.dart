@@ -15,32 +15,27 @@ class PopularProducts extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator(color: Colors.red,));
           }
-          // var docs=snapshot.data();
-          
           demoProducts=[];
           snapshot.data.docs.forEach((element) {
             demoProducts.add(
-                Product(
-                id: element.id.toString(),
+                Product(id: element.id.toString(),
                 images: element["images"],
                 colors: [],
+                categorieId: element["categorieId"],
                 title: element["titre"],
+                oldPrice: element.data()['oldPrix'].toDouble(),
                 price: element["prix"].toDouble(),
-                description: element["description"],
-                countlikes:element.data()['countlikes']
-                )
-                );
-          }
-          );
-         
-          print("@@@@@@@@@@@@@@@@@@@@@@");
+                description: element["description"]));
+            print("****************");
+            print(element.data()['oldPrix'].toDouble());
+          });
           return Column(
             children: [
               Padding(
                 padding:
                 EdgeInsets.symmetric(
                     horizontal: getProportionateScreenWidth(20)),
-                child: SectionTitle(title: "Popular Products", press: () {}),
+                child: SectionTitle(title: "Products", press: () {}),
               ),
               SizedBox(height: getProportionateScreenWidth(20)),
               SingleChildScrollView(
@@ -59,24 +54,3 @@ class PopularProducts extends StatelessWidget {
         });
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/components/no_account_text.dart';
@@ -30,12 +31,17 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   // body:
+   // backgroundColor: Colors.redAccent;
+     
     return SafeArea(
       child: SizedBox(
         width: double.infinity,
+        
         child: Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)
+              ),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -43,7 +49,7 @@ class Body extends StatelessWidget {
                 Text(
                   "Welcome Back",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.red[900],
                     fontSize: getProportionateScreenWidth(28),
                     fontWeight: FontWeight.bold,
                   ),
@@ -51,6 +57,11 @@ class Body extends StatelessWidget {
                 Text(
                   "Sign in with your email and password  \nor continue with social media",
                   textAlign: TextAlign.center,
+                  style: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+            fontSize: 15
+          ),
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 SignForm(),

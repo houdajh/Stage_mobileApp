@@ -37,12 +37,11 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "Log Out",
             icon: "assets/icons/Log out.svg",
-             press: () async {
+            press: () async {
               await FirebaseAuth.instance.signOut();
-              Navigator.of(context)
-                  .pushReplacementNamed(SignInScreen.routeName);
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.pushReplacementNamed(context, SignInScreen.routeName);
             },
-            
           ),
         ],
       ),

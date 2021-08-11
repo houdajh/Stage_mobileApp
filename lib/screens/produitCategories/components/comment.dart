@@ -1,10 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop_app/models/Product.dart';
 import 'package:flutter/src/material/icon_button.dart';
-import 'package:shop_app/models/comm.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'product_description.dart';
@@ -24,18 +21,9 @@ class _TestMeState extends State<TestMe> {
   
   final formKey = GlobalKey<FormState>();
   final TextEditingController commentController = TextEditingController();
-  CollectionReference commRef =
-                  FirebaseFirestore.instance.collection("comment");
-   User userData=  FirebaseAuth.instance.currentUser;
-     CollectionReference usersRef = 
-                  FirebaseFirestore.instance.collection("users");
-
-
-   final Product product;
-    
   List filedata = [
     {
-      'name': "houda",
+      'name': 'Adeleye Ayodeji',
       'pic': 'https://picsum.photos/300/30',
       'message': 'I love to code'
     },
@@ -56,47 +44,8 @@ class _TestMeState extends State<TestMe> {
     },
   ];
 
-  _TestMeState({Key key, @required this.product });
-
   Widget commentChild(data) {
-    
-    //body:
-     FutureBuilder<DocumentSnapshot>(
-       future: commRef.doc(userData.uid).get(),
-     builder:
-        // ignore: missing_return
-        (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-            if (snapshot.hasError) {
-          return Text("Something went wrong");
-        }
-
-        if (snapshot.hasData && !snapshot.data.exists) {
-          return Text("Document does not exist");
-        }
-        filedata = [];
-           if (snapshot.connectionState == ConnectionState.done) {
-         // Map<String, dynamic> dataa = snapshot.data.data() as Map<String, dynamic>;
-          filedata.add({
-               // Comment(
-              //id: element.id,
-              'name': data['name'],
-              'pic': data['pic'],
-              'message': data['message'],
-          }
-       // )
-                );
-                 commRef.doc(userData.uid).get().then((DocumentSnapshot doc) =>
-             filedata.add({doc.data})
-            
-                 );
-         
-        }
-              
-          
-                
-          }
-     );
-          return ListView(
+    return ListView(
       children: [
         for (var i = 0; i < data.length; i++)
           Padding(
@@ -106,7 +55,6 @@ class _TestMeState extends State<TestMe> {
                 onTap: () async {
                   // Display the image in large form.
                   print("Comment Clicked");
-                  
                 },
                 child: Container(
                   height: 50.0,
@@ -128,11 +76,7 @@ class _TestMeState extends State<TestMe> {
           )
       ],
     );
-          
-        }
-    
-    
-  
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,17 +102,7 @@ class _TestMeState extends State<TestMe> {
           sendButtonMethod: () {
             if (formKey.currentState.validate()) {
               print(commentController.text);
-              //commRef.doc(userData.uid).get().then((DocumentSnapshot doc) =>
-            // print(democomment[0]),
-            // );
-
               setState(() {
-                //commRef.doc(userData.uid).update({"message": []});
-               //  commRef.doc(userData.uid).update({
-              //  "message": FieldValue.arrayUnion([commentController.text]),
-                
-            //  });
-
                 var value = {
                   'name': 'New User',
                   'pic':
