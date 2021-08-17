@@ -17,11 +17,12 @@ class _BodyState extends State<Body> {
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: ListView.builder(
+        
         itemCount: demoCarts.length,
         itemBuilder: (context, index) => Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
           child: Dismissible(
-            key: Key(demoCarts[index].product.id.toString()),
+            key: Key(demoCarts[0].product.id.toString()),
             direction: DismissDirection.endToStart,
             onDismissed: (direction) {
               setState(() {

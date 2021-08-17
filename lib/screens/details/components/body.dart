@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/models/Product.dart';
+import 'package:shop_app/screens/cart/cart_screen.dart';
+import 'package:shop_app/screens/details/components/form_screen.dart';
+import 'package:shop_app/screens/details/components/order.dart';
 //import 'package:shop_app/models/user.dart';
 import 'package:shop_app/size_config.dart';
 import 'package:like_button/like_button.dart';
@@ -202,11 +205,11 @@ Future<bool> onLikeButtonTapped(bool isLiked) async{
                                         
                                         ).catchError((error) => print("Failed to increment like : $error"));
                                   
-                                        likesRef.doc(userData.uid).update(
+                                        likesRef.doc(userData.uid).set(
                                           {
                                           product.id : true,
                                           
-                                        },//SetOptions(merge : true),
+                                        },SetOptions(merge : true),
                                           
                                         ).then((value) => isLiked=true
                                      //  ListID.add(userData.uid)
@@ -380,10 +383,38 @@ Future<bool> onLikeButtonTapped(bool isLiked) async{
                                                                   ), 
                                                                   ),  
                                                                    ), 
-                                                                       DefaultButton(
-                                                                                text: "order",
-                                                                                press: () {},
-                                                                              ),
+                                                                    new RaisedButton(
+                                                                      color: Colors.redAccent,
+                  splashColor: Colors.yellow[200],
+                  animationDuration: Duration(seconds: 2),
+                  shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(18.0),
+                  side: BorderSide(color: Colors.black),
+                    ),
+                onPressed: () {
+                  // A MaterialPageRoute is a  modal route that replaces the entire screen
+                  // with a platform-adaptive transition.
+                  var route = new MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        new FormScreen(
+                          value: Product(
+                            id: product.id, 
+                            title: product.title,
+                          )
+                                  ),
+                  );
+                  Navigator.of(context).push(route);
+                },
+                child: new Text('ORDER',
+                 style: TextStyle(color: Colors.black, fontSize: 50),
+                ),
+              ),
+                                                                     //  DefaultButton(
+                                                                             //   text: "order",
+                                                                                
+                                                                           //    press: () => Navigator.pushNamed(context, Order.routeName),
+                                                                               
+                                                                            //  ),
                                                                         
                                                                        
                                                                       ],

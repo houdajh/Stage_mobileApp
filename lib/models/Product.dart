@@ -36,7 +36,6 @@ const String description =
 class Products with ChangeNotifier {
   List<Product> productsList = [];
 
-
   getDataProduits() async{
     FirebaseFirestore.instance.collection("produits").snapshots().listen((event) {
       event.docs.forEach((element) {
@@ -59,35 +58,3 @@ class Products with ChangeNotifier {
     }
   }
 
-//   Future<void> fetchData() async {
-//     const url = "https://flutter-app-568d3.firebaseio.com/product.json";
-//     try {
-//       final http.Response res = await http.get(url);
-//       final extractedData = json.decode(res.body) as Map<String, dynamic>;
-//       extractedData.forEach((prodId, prodData) {
-//         final prodIndex = productsList.indexWhere((element) => element.id == prodId);
-//         // if (prodIndex >= 0) {
-//         //   productsList[prodIndex] = Product(
-//         //     id: prodId,
-//         //     title: prodData['title'],
-//         //     description: prodData['description'],
-//         //     price: prodData['price'],
-//         //     imageUrl: prodData['imageUrl'],
-//         //   );
-//         // } else {
-//         //   productsList.add(Product(
-//         //     id: prodId,
-//         //     title: prodData['title'],
-//         //     description: prodData['description'],
-//         //     price: prodData['price'],
-//         //     imageUrl: prodData['imageUrl'],
-//         //   ));
-//         // }
-//       });
-//       //notifyListeners();
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
-//
-// }
