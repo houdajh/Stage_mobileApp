@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_app/screens/account/account_screen.dart';
 import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 
 import 'profile_menu.dart';
@@ -17,7 +18,9 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "My Account",
             icon: "assets/icons/User Icon.svg",
-            press: () => {},
+            press: () => {
+              Navigator.pushReplacementNamed(context, AccountScreen.routeName)
+            },
           ),
           ProfileMenu(
             text: "Notifications",

@@ -23,6 +23,20 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   String phoneNumber;
   String address;
   String profileImage = "no profilePic";
+  getUID() async {
+    CollectionReference productsRef =
+        FirebaseFirestore.instance.collection("Products");
+    var resp = await productsRef.get();
+    resp.docs.forEach((element) async {
+      print(element.id);
+      CollectionReference likesRef =
+          FirebaseFirestore.instance.collection("likes");
+      await likesRef.doc(FirebaseAuth.instance.currentUser.uid).set({
+        {element.id: false},
+        SetOptions(merge: true),
+      });
+    });
+  }
 
   void addError({String error}) {
     if (!errors.contains(error))
@@ -72,6 +86,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                 "profileImage": profileImage,
                 "uid": FirebaseAuth.instance.currentUser.uid
               });
+              getUID();
               print("done");
               await Navigator.pushNamed(context, HomeScreen.routeName);
             },

@@ -127,7 +127,7 @@ class _ProfilePicState extends State<ProfilePic> {
                 ),
                 color: Color(0xFFF5F6F9),
                 onPressed: () async {
-                  await getImage();
+                 // await getImage();
                   print("==================================");
                   print(image);
                   await showChoiceDialog(context);

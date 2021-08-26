@@ -1,119 +1,65 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:shop_app/components/categories_card.dart';
+import 'package:shop_app/models/Categories.dart';
 import '../../../size_config.dart';
 import 'section_title.dart';
 
 class SpecialOffers extends StatelessWidget {
   const SpecialOffers({
     Key key,
+    Categorie categorie,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(
-            title: "Special for you",
-            press: () {},
-          ),
-        ),
-        SizedBox(height: getProportionateScreenWidth(20)),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance.collection("categorie").snapshots(),
+        builder:
+            (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator(color: Colors.red,));
+          }
+          demoCategories=[];
+          snapshot.data.docs.forEach((element) {
+            demoCategories.add(
+                Categorie(id: element.id.toString(),
+                  image: element["image"],
+                  title: element["titre"],));
+          });
+          return Column(
             children: [
-              SpecialOfferCard(
-                image: "assets/images/Image Banner 2.png",
-                category: "Smartphone",
-                numOfBrands: 18,
-                press: () {},
+              Padding(
+                padding:
+                EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+                child: SectionTitle(
+                  title: "Categories",
+                  press: () {},
+                ),
               ),
-              SpecialOfferCard(
-                image: "assets/images/Image Banner 3.png",
-                category: "Fashion",
-                numOfBrands: 24,
-                press: () {},
+              SizedBox(height: getProportionateScreenWidth(20)),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Container(
+                  height: 120,
+                  child:
+                  ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemBuilder: (context,index){
+                        return SpecialOfferCard(
+
+                          categorie: demoCategories[index],
+                        );
+                      },
+                      separatorBuilder: (context,index)=>SizedBox(width: 0,),
+                      itemCount: demoCategories.length),
+                ),
+
               ),
-              SizedBox(width: getProportionateScreenWidth(20)),
             ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class SpecialOfferCard extends StatelessWidget {
-  const SpecialOfferCard({
-    Key key,
-    @required this.category,
-    @required this.image,
-    @required this.numOfBrands,
-    @required this.press,
-  }) : super(key: key);
-
-  final String category, image;
-  final int numOfBrands;
-  final GestureTapCallback press;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
-      child: GestureDetector(
-        onTap: press,
-        child: SizedBox(
-          width: getProportionateScreenWidth(242),
-          height: getProportionateScreenWidth(100),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Stack(
-              children: [
-                Image.asset(
-                  image,
-                  fit: BoxFit.cover,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xFF343434).withOpacity(0.4),
-                        Color(0xFF343434).withOpacity(0.15),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(15.0),
-                    vertical: getProportionateScreenWidth(10),
-                  ),
-                  child: Text.rich(
-                    TextSpan(
-                      style: TextStyle(color: Colors.white),
-                      children: [
-                        TextSpan(
-                          text: "$category\n",
-                          style: TextStyle(
-                            fontSize: getProportionateScreenWidth(18),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        TextSpan(text: "$numOfBrands Brands")
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+          );
+        }
     );
   }
 }

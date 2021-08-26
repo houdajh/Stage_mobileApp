@@ -4,7 +4,7 @@ import '../../models/Product.dart';
 import 'components/body.dart';
 import 'components/custom_app_bar.dart';
 
-class DetailsScreen extends StatelessWidget {
+class DetailPage extends StatelessWidget {
   static String routeName = "/details";
 
   @override
@@ -13,7 +13,7 @@ class DetailsScreen extends StatelessWidget {
         ModalRoute.of(context).settings.arguments;
     return Scaffold(
       backgroundColor: Color(0xFFF5F6F9),
-      appBar: CustomAppBar(rating: agrs.product.rating),
+     // appBar: CustomAppBar(rating: agrs.product.oldPrice),
       body: Body(product: agrs.product),
     );
   }

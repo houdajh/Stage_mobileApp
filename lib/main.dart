@@ -1,15 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app/Provider.dart';
 import 'package:shop_app/routes.dart';
 import 'package:shop_app/screens/profile/profile_screen.dart';
 import 'package:shop_app/screens/splash/splash_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:shop_app/theme.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-void main() async {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(
+      ChangeNotifierProvider<MyProvider>(
+          create: (_)=>MyProvider(),
+          child: MyApp(),
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {

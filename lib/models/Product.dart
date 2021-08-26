@@ -1,103 +1,93 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 class Product {
-  final int id;
-  final String title, description;
-  final List<String> images;
+  final String id;
+  final String title, description,categorieId;
+  final List<dynamic> images;
   final List<Color> colors;
-  final double rating, price;
-  final bool isFavourite, isPopular;
+  final double oldPrice, price;
+  final int countlikes;
 
-  Product({
+  Product( {
+
     @required this.id,
     @required this.images,
     @required this.colors,
-    this.rating = 0.0,
-    this.isFavourite = false,
-    this.isPopular = false,
+    @required  this.oldPrice,
     @required this.title,
     @required this.price,
     @required this.description,
+    @required this.categorieId,
+    this.countlikes ,
   });
 }
 
 // Our demo Products
 
-List<Product> demoProducts = [
-  Product(
-    id: 1,
-    images: [
-      "assets/images/ps4_console_white_1.png",
-      "assets/images/ps4_console_white_2.png",
-      "assets/images/ps4_console_white_3.png",
-      "assets/images/ps4_console_white_4.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Wireless Controller for PS4™",
-    price: 64.99,
-    description: description,
-    rating: 4.8,
-    isFavourite: true,
-    isPopular: true,
-  ),
-  Product(
-    id: 2,
-    images: [
-      "assets/images/Image Popular Product 2.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Nike Sport White - Man Pant",
-    price: 50.5,
-    description: description,
-    rating: 4.1,
-    isPopular: true,
-  ),
-  Product(
-    id: 3,
-    images: [
-      "assets/images/glap.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Gloves XC Omega - Polygon",
-    price: 36.55,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
-    isPopular: true,
-  ),
-  Product(
-    id: 4,
-    images: [
-      "assets/images/wireless headset.png",
-    ],
-    colors: [
-      Color(0xFFF6625E),
-      Color(0xFF836DB8),
-      Color(0xFFDECB9C),
-      Colors.white,
-    ],
-    title: "Logitech Head",
-    price: 20.20,
-    description: description,
-    rating: 4.1,
-    isFavourite: true,
-  ),
-];
+List<Product>  demoProducts = [];
 
 const String description =
-    "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
+    "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
+
+
+
+class Products with ChangeNotifier {
+  List<Product> productsList = [];
+
+
+  getDataProduits() async{
+    FirebaseFirestore.instance.collection("produits").snapshots().listen((event) {
+      event.docs.forEach((element) {
+        print("****************");
+        print(element.data()['oldPrix']);
+        productsList.add(Product(
+              id: element.id,
+              title: element.data()['title'],
+              description: element.data()['description'],
+              price: element.data()['prix'],
+              images: element.data()['images'],
+              oldPrice:element.data()['oldPrix'],
+              categorieId :element.data()['categorieId'],
+        ));
+        // element.data()['images'].forEach((e){
+        //   print(e);
+
+            });
+      });
+    }
+  }
+
+//   Future<void> fetchData() async {
+//     const url = "https://flutter-app-568d3.firebaseio.com/product.json";
+//     try {
+//       final http.Response res = await http.get(url);
+//       final extractedData = json.decode(res.body) as Map<String, dynamic>;
+//       extractedData.forEach((prodId, prodData) {
+//         final prodIndex = productsList.indexWhere((element) => element.id == prodId);
+//         // if (prodIndex >= 0) {
+//         //   productsList[prodIndex] = Product(
+//         //     id: prodId,
+//         //     title: prodData['title'],
+//         //     description: prodData['description'],
+//         //     price: prodData['price'],
+//         //     imageUrl: prodData['imageUrl'],
+//         //   );
+//         // } else {
+//         //   productsList.add(Product(
+//         //     id: prodId,
+//         //     title: prodData['title'],
+//         //     description: prodData['description'],
+//         //     price: prodData['price'],
+//         //     imageUrl: prodData['imageUrl'],
+//         //   ));
+//         // }
+//       });
+//       //notifyListeners();
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+//
+// }

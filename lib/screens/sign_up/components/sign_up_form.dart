@@ -127,6 +127,10 @@ class _SignUpFormState extends State<SignUpForm> {
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
       ),
+       style: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+          ),
     );
   }
 

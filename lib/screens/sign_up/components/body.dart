@@ -41,6 +41,11 @@ class Body extends StatelessWidget {
                 Text(
                   "Complete your details or continue \nwith social media",
                   textAlign: TextAlign.center,
+                  style: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+            fontSize: 15
+          ),
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 SignUpForm(),

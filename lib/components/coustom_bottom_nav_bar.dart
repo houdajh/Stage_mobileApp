@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/profile/profile_screen.dart';
-
+import 'package:shop_app/screens/wishlist/wishlist.dart';
 import '../constants.dart';
 import '../enums.dart';
 
@@ -49,8 +49,14 @@ class CustomBottomNavBar extends StatelessWidget {
                     Navigator.pushNamed(context, HomeScreen.routeName),
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/Heart Icon.svg"),
-                onPressed: () {},
+                icon: SvgPicture.asset("assets/icons/Heart Icon.svg",
+                color: MenuState.favourite == selectedMenu
+                      ? kPrimaryColor
+                      : inActiveIconColor,
+                      ),
+                
+                onPressed: () =>
+                    Navigator.pushNamed(context, wishlist.routeName),
               ),
               IconButton(
                 icon: SvgPicture.asset("assets/icons/Chat bubble Icon.svg"),
