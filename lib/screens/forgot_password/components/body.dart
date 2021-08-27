@@ -4,7 +4,7 @@ import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/components/form_error.dart';
 import 'package:shop_app/components/no_account_text.dart';
 import 'package:shop_app/size_config.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../../constants.dart';
 
 class Body extends StatelessWidget {
@@ -49,7 +49,7 @@ class ForgotPassForm extends StatefulWidget {
 class _ForgotPassFormState extends State<ForgotPassForm> {
   final _formKey = GlobalKey<FormState>();
   List<String> errors = [];
-  String email;
+  String _email;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -58,7 +58,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         children: [
           TextFormField(
             keyboardType: TextInputType.emailAddress,
-            onSaved: (newValue) => email = newValue,
+            onSaved: (newValue) => _email = newValue,
             onChanged: (value) {
               if (value.isNotEmpty && errors.contains(kEmailNullError)) {
                 setState(() {
@@ -99,9 +99,15 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           DefaultButton(
             text: "Continue",
-            press: () {
+            press: () async {
               if (_formKey.currentState.validate()) {
-                // Do what you want to do
+                _formKey.currentState.save();
+                print("==============");
+                print(_email);
+                await FirebaseAuth.instance
+                    .sendPasswordResetEmail(email: _email);
+
+                Navigator.of(context).pop();
               }
             },
           ),

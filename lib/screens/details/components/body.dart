@@ -1,4 +1,6 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shop_app/components/default_button.dart';
@@ -12,7 +14,6 @@ import 'package:like_button/like_button.dart';
 import 'color_dots.dart';
 import 'comment.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'product_description.dart';
 import 'top_rounded_container.dart';
 import 'product_images.dart';
 
@@ -23,6 +24,13 @@ class Body extends StatelessWidget {
   
  
  
+
+ //bool getCounselorValue(DocumentSnapshot documentSnapshotForCounselor)
+ //{
+    //modify this by passing proper keyValue to get counselor. 
+  // return  documentSnapshotForCounselor.data()[product.id];
+ 
+ //}
   User userData=  FirebaseAuth.instance.currentUser;
   
   CollectionReference usersRef = 
@@ -30,24 +38,26 @@ class Body extends StatelessWidget {
  CollectionReference postRef = FirebaseFirestore.instance.collection("produits");
  CollectionReference likesRef =
                   FirebaseFirestore.instance.collection("likes");
+
+                  CollectionReference likesCounterRef =
+                  FirebaseFirestore.instance.collection("likesCounter");
               
              
   Body({Key key, @required this.product }) : super(key: key);
 
-Future<bool> onLikeButtonTapped(bool isLiked) async{
-    /// send your request here
-    // final bool success= await sendRequest();
 
-    /// if failed, you can do nothing
-    // return success? !isLiked:isLiked;
-
-    return !isLiked;
-  }
 
   @override
   Widget build(BuildContext context) {
    // var like =FirebaseFirestore.instance.collection("likes").doc(userData.uid).collection(product.id).where(product.id );
     var size = MediaQuery.of(context).size;
+     var fav =  FirebaseFirestore.instance
+    .collection('likes')
+    .doc(userData.uid)
+    .get()
+    .then((value) {
+       return value.data()['0v9uvzgNhHWl4NdbpUSX']; // Access your after your get the data
+     });
     return 
         SingleChildScrollView(
       child: Stack(
@@ -163,8 +173,8 @@ Future<bool> onLikeButtonTapped(bool isLiked) async{
            
            
             child: LikeButton(
-              onTap: onLikeButtonTapped,
               size: 30,
+              
           circleColor:
               CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
           bubblesColor: BubblesColor(
@@ -173,45 +183,76 @@ Future<bool> onLikeButtonTapped(bool isLiked) async{
             
           ),
           likeBuilder: (bool isLiked) {
-              likesRef.doc(userData.uid).get().then((DocumentSnapshot doc) =>
-             print(doc.data()),
-             
-             ) ;
+
+              
             return
             FutureBuilder(
+              
                      future: likesRef.get(),
                       // ignore: missing_return
                       builder: (context ,snapshot){
-                        
-                         if(isLiked){
+                         var fav =  FirebaseFirestore.instance
+    .collection('likes')
+    .doc(userData.uid)
+    .get()
+    .then((value) {
+      isLiked=value.data()[product.id];
+      print(value.data()[product.id] ) ;// Access your after your get the data
+     });
+
+      FirebaseFirestore.instance
+    .collection('likesCounter')
+    .doc(product.id)
+    .get()
+    .then((value) {
+       
+      postRef.doc(product.id).set(
+                                          {
+                                          "countlikes" : value.data().length,
+                                          
+                                        },SetOptions(merge : true),
+                                          
+                                        ).then((value) => print("countlikes")
+                                     //  ListID.add(userData.uid)
+                                        ) .catchError((error) => print("Failed to modify like : $error"));
+      
+      print("voila: ${value.data().length}" ) ;// Access your after your get the data
+    
+     });
+     
+     
+     if(isLiked ){
+       
                        if(snapshot.connectionState == ConnectionState.waiting){
                                    print("WAIT");
+                                
                                   // print(likesRef.doc(userData.uid).firestore.collection(product.id).where(product.id));
                                 }
                        if(snapshot.hasError){
+
                                print("ERROR");    
                                }
                         if(snapshot.hasData   ){
-                       //   InkWell(
-                          //  onTap: () {
-                                      //  if(FirebaseFirestore.instance.collection("likes").doc(userData.uid).collection(product.id) == false ){
-                                 postRef.doc(product.id).update(
+                         
+                          
+
+                        likesCounterRef.doc(product.id).set(
                                           {
-                                          "countlikes" : FieldValue.increment(1),
+                                          userData.uid : true,
                                           
-                                        }
+                                        },SetOptions(merge : true),
                                           
-                                        ).then((value) => print("like incremented"),
-                                        
-                                        ).catchError((error) => print("Failed to increment like : $error"));
-                                  
+                                        ).then((value) => print("likesCounter")
+                                     //  ListID.add(userData.uid)
+                                        ) .catchError((error) => print("Failed to modify like : $error"));
+                                
                                         likesRef.doc(userData.uid).set(
                                           {
                                           product.id : true,
                                           
                                         },SetOptions(merge : true),
                                           
-                                        ).then((value) => isLiked=true
+                                        ).then((value) => print("object")
                                      //  ListID.add(userData.uid)
                                         ) .catchError((error) => print("Failed to modify like : $error"));
                               return  Icon(
@@ -223,18 +264,33 @@ Future<bool> onLikeButtonTapped(bool isLiked) async{
            // );
                                   }  
                               }
-                          if(snapshot.hasData && !isLiked ){
-                               
+                         else{
+                            if(snapshot.connectionState == ConnectionState.waiting){
+                                   print("WAIT");
+                                
+                                  // print(likesRef.doc(userData.uid).firestore.collection(product.id).where(product.id));
+                                }
+                       if(snapshot.hasError){
+
+                               print("ERROR");    
+                               }
+                          if(snapshot.hasData  ){
                                       //  if(FirebaseFirestore.instance.collection("likes").doc(userData.uid).collection(product.id) == false ){
-                                    postRef.doc(product.id).update(
-                                        {
-                                        "countlikes" : FieldValue.increment(-1),
-                                     }  
-                       ).then((value) => print("like decremented")).catchError((error) => print("Failed to decrement like : $error"));
-                                  
+                                   
+                                          likesCounterRef.doc(product.id).set(
+                                          {
+                                          userData.uid : FieldValue.delete(),
+                                          
+                                        },SetOptions(merge : true),
+                                          
+                                        ).then((value) => print("likesCounter")
+                                     //  ListID.add(userData.uid)
+                                        ) .catchError((error) => print("Failed to modify like : $error"));
+                                
+                                
                                     likesRef.doc(userData.uid).update(
                                           {
-                                          product.id : FieldValue.delete(),
+                                          product.id : false,
                                           
                                         },//SetOptions(merge : true),
                                           
@@ -247,6 +303,16 @@ Future<bool> onLikeButtonTapped(bool isLiked) async{
                             
                                      
                               }
+                              else{
+                                 return  Icon(
+                                Icons.favorite,
+                                 color: Colors.grey,
+                                size: 30,
+                              );
+
+                              }
+                              
+                      }
                                   }
                                  
                             );

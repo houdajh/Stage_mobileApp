@@ -7,7 +7,6 @@ import 'package:flutter/src/material/icon_button.dart';
 import 'package:shop_app/models/comm.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
-import 'product_description.dart';
 
 import 'package:comment_box/comment/comment.dart';
 
