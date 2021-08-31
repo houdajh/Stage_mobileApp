@@ -243,6 +243,7 @@ class Body extends StatelessWidget {
                         likesCounterRef.doc(product.id).set(
                                           {
                                           userData.uid : true,
+                                          "uid" : product.id,
                                           
                                         },SetOptions(merge : true),
                                           

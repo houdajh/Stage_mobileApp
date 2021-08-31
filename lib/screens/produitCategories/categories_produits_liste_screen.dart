@@ -32,16 +32,17 @@ class CategoriesLsiteProduits extends StatelessWidget {
                 demoProducts=[];
                 snapshot.data.docs.forEach((element) {
                   if(element['categorieId']==agrs.categorie.id){
-                    print("--------------->>>>>>");
-                    print(element["categorieId"]);
+                   // print("--------------->>>>>>");
+                   // print(element["categorieId"]);
                     print("=====>>>>>>");
-                    print(agrs.categorie.id);
+                  //  print(agrs.categorie.id);
                           demoProducts.add(
                               Product(id: element.id.toString(),
                                   images: element["images"],
                                   colors: [],
                                   categorieId: element["categorieId"],
                                   title: element["titre"],
+                                  countlikes: element["countlikes"],
                                   oldPrice: element.data()['oldPrix'].toDouble(),
                                   price: element["prix"].toDouble(),
                                   description: element["description"]));

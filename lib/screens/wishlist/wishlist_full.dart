@@ -1,63 +1,20 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app/constants.dart';
 
 class WishlistFull extends StatefulWidget {
- 
-  
-  
-  const WishlistFull();
+  final String productId;
+
+  const WishlistFull({this.productId});
   @override
   _WishlistFullState createState() => _WishlistFullState();
-  
 }
 
 class _WishlistFullState extends State<WishlistFull> {
-  Future getPosts() async{
-    var firestore =FirebaseFirestore.instance;
-    
-    QuerySnapshot qn = await firestore.collection("likesCounter").get();
-    return qn.docs;
-  }
   @override
   Widget build(BuildContext context) {
    // final favsAttr = Provider.of<FavsAttr>(context);
-   
-  User userData=  FirebaseAuth.instance.currentUser;
-   return
-    FutureBuilder(
-            future: getPosts(),
-            // ignore: missing_return
-            builder: (_,  snapshot) {
-               if(snapshot.connectionState == ConnectionState.waiting){
-                                   print(" ohhhhhhhhh WAIT");
-                                
-                               }
-                       if(snapshot.hasError){
-
-                               print("wa333333333 ERROR");    
-                               }
-                               else{
-                                 CollectionReference postRef = FirebaseFirestore.instance.collection("produits");
-                                  CollectionReference likesCountRef = FirebaseFirestore.instance.collection("likesCounter");
-                                 return 
-                                  Expanded(
-          child: SizedBox(
-            height: 200.0,
-                                 child: ListView.builder(
-                                   itemCount: snapshot.data.length,
-                                   itemBuilder: ( _ ,index){
-                                     var id;
-                                     id =snapshot.data[index][userData.uid];
-                                      likesCountRef.get().then((snapshot) {
-      snapshot.docs.forEach((doc) {
-        print(doc.data.toString());
-      });
-    });
-    
-                                 print("******************* $id");
-                                      return Stack(
+    return Stack(
       children: <Widget>[
         Container(
           width: double.infinity,
@@ -85,7 +42,7 @@ class _WishlistFullState extends State<WishlistFull> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "+++++++++${postRef.doc()}",
+                            "wish",
                             //favsAttr.title,
                             style: TextStyle(
                                 fontSize: 16.0, 
@@ -112,19 +69,38 @@ class _WishlistFullState extends State<WishlistFull> {
             ),
           ),
         ),
+        positionedRemove(widget.productId),
       ],
     );
-                                   }
-                                   )
-          )
-                                  );
-                               }
-              
-            },
-          );
-    
-   
   }
 
-  
+  Widget positionedRemove(String productId) {
+   // final favsProvider = Provider.of<FavsProvider>(context);
+   // GlobalMethods globalMethods = GlobalMethods();
+    return Positioned(
+      top: 20,
+      right: 15,
+      child: Container(
+        height: 30,
+        width: 30,
+        child: MaterialButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0)),
+            padding: EdgeInsets.all(0.0),
+            color: Color(0xFFFF7643),
+            child: Icon(
+              Icons.clear,
+              color: Colors.white,
+            ),
+            onPressed: () => {
+                  //globalMethods.showDialogg(
+                     // 'Remove wish!',
+                     // 'This product will be removed from your wishlist!',
+                    //  () => favsProvider.removeItem(productId),
+                   //   context),
+                }
+                ),
+      ),
+    );
+  }
 }
