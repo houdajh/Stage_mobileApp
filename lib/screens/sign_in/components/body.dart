@@ -49,13 +49,13 @@ class Body extends StatelessWidget {
                 Text(
                   "Welcome Back",
                   style: TextStyle(
-                    color: Colors.red[900],
+                    color: Colors.black87,
                     fontSize: getProportionateScreenWidth(28),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  "Sign in with your email and password  \nor continue with social media",
+                  "Sign in with your email and password  \nor continue with Google",
                   textAlign: TextAlign.center,
                   style: TextStyle(
             color: Colors.black87,
@@ -71,20 +71,14 @@ class Body extends StatelessWidget {
                   children: [
                     SocalCard(
                       icon: "assets/icons/google-icon.svg",
+                      
                       press: () async {
                         UserCredential cred = await signInWithGoogle();
                         print(cred);
                         Navigator.pushNamed(context, HomeScreen.routeName);
                       },
                     ),
-                    SocalCard(
-                      icon: "assets/icons/facebook-2.svg",
-                      press: () {},
-                    ),
-                    SocalCard(
-                      icon: "assets/icons/twitter.svg",
-                      press: () {},
-                    ),
+                    
                   ],
                 ),
                 SizedBox(height: getProportionateScreenHeight(20)),

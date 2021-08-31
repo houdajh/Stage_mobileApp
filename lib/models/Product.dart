@@ -20,7 +20,7 @@ class Product {
     @required this.price,
     @required this.description,
     @required this.categorieId,
-    this.countlikes ,
+    @required this.countlikes ,
   });
 }
 
@@ -49,6 +49,7 @@ class Products with ChangeNotifier {
               images: element.data()['images'],
               oldPrice:element.data()['oldPrix'],
               categorieId :element.data()['categorieId'],
+              countlikes :element.data()['countlikes'],
         ));
         // element.data()['images'].forEach((e){
         //   print(e);

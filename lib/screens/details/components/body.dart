@@ -23,14 +23,6 @@ class Body extends StatelessWidget {
   List<String>  ListID = [];
   
  
- 
-
- //bool getCounselorValue(DocumentSnapshot documentSnapshotForCounselor)
- //{
-    //modify this by passing proper keyValue to get counselor. 
-  // return  documentSnapshotForCounselor.data()[product.id];
- 
- //}
   User userData=  FirebaseAuth.instance.currentUser;
   
   CollectionReference usersRef = 
@@ -51,7 +43,12 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
    // var like =FirebaseFirestore.instance.collection("likes").doc(userData.uid).collection(product.id).where(product.id );
     var size = MediaQuery.of(context).size;
-     var fav =  FirebaseFirestore.instance
+
+    
+
+
+
+       FirebaseFirestore.instance
     .collection('likes')
     .doc(userData.uid)
     .get()
@@ -107,22 +104,15 @@ class Body extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(14),
               ),
-                      
-              child: Row(
+                       child: Row(
                 children: [
-                  Text(
-                    "4.9",
-                    style: const TextStyle(
-                      color : Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  
                   const SizedBox(width: 5),
-                  SvgPicture.asset("assets/icons/Star Icon.svg"),
+                  
                   
                 ],
                 ),
+              
               ),
             ),
             ),
@@ -174,7 +164,6 @@ class Body extends StatelessWidget {
            
             child: LikeButton(
               size: 30,
-              
           circleColor:
               CircleColor(start: Color(0xff00ddff), end: Color(0xff0099cc)),
           bubblesColor: BubblesColor(
@@ -191,6 +180,19 @@ class Body extends StatelessWidget {
                      future: likesRef.get(),
                       // ignore: missing_return
                       builder: (context ,snapshot){
+
+                        var likes;
+                        FirebaseFirestore.instance
+    .collection('produits')
+    .doc(product.id)
+    .get()
+    .then((value) {
+      likes=value.data()["countlikes"];
+      print("yabsmlah $likes" ) ;// Access your after your get the data
+     });
+
+
+
                          var fav =  FirebaseFirestore.instance
     .collection('likes')
     .doc(userData.uid)
@@ -200,12 +202,14 @@ class Body extends StatelessWidget {
       print(value.data()[product.id] ) ;// Access your after your get the data
      });
 
+    
+    
+    
       FirebaseFirestore.instance
     .collection('likesCounter')
     .doc(product.id)
     .get()
     .then((value) {
-       
       postRef.doc(product.id).set(
                                           {
                                           "countlikes" : value.data().length,
@@ -340,12 +344,7 @@ class Body extends StatelessWidget {
                                                                             Container(
                                                                               width: 40,
                                                                               height: 40,
-                                                                              decoration: BoxDecoration(
-                                                                                  shape: BoxShape.circle,
-                                                                                  image: DecorationImage(
-                                                                                      image: NetworkImage(
-                                                                                          "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80"),
-                                                                                      fit: BoxFit.cover)),
+                                                                              
                                                                             ),
                                                                             SizedBox(
                                                                               width: 20,
@@ -353,8 +352,18 @@ class Body extends StatelessWidget {
                                                                             Column(
                                                                               crossAxisAlignment: CrossAxisAlignment.start,
                                                                               children: <Widget>[
+                                                                                
                                                                                 Text(
-                                                                                  "Jean-Luis",
+                                                                                  " likes: ${product.countlikes}",
+
+                                                                                  style: TextStyle(
+                                                                                      fontSize: 16, fontWeight: FontWeight.bold),
+                                                                                ),
+                                                                                SizedBox(
+                                                                                  height: 3,
+                                                                                ),
+                                                                                 Text(
+                                                                                  " Price: ${product.price}\t\$",
                                                                                   style: TextStyle(
                                                                                       fontSize: 16, fontWeight: FontWeight.bold),
                                                                                 ),
@@ -362,7 +371,7 @@ class Body extends StatelessWidget {
                                                                                   height: 3,
                                                                                 ),
                                                                                 Text(
-                                                                                  "Interior Design",
+                                                                                  "Old Price: ${product.oldPrice}\t\$",
                                                                                   style: TextStyle(fontSize: 13),
                                                                                 )
                                                                               ],
@@ -449,15 +458,10 @@ class Body extends StatelessWidget {
                                                                   ), 
                                                                   ),  
                                                                    ), 
-                                                                    new RaisedButton(
-                                                                      color: Colors.redAccent,
-                  splashColor: Colors.yellow[200],
-                  animationDuration: Duration(seconds: 2),
-                  shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(18.0),
-                  side: BorderSide(color: Colors.black),
-                    ),
-                onPressed: () {
+                                                                   DefaultButton(
+                                                                    text :'ORDER',
+                
+                press: () {
                   // A MaterialPageRoute is a  modal route that replaces the entire screen
                   // with a platform-adaptive transition.
                   var route = new MaterialPageRoute(
@@ -471,9 +475,7 @@ class Body extends StatelessWidget {
                   );
                   Navigator.of(context).push(route);
                 },
-                child: new Text('ORDER',
-                 style: TextStyle(color: Colors.black, fontSize: 50),
-                ),
+                
               ),
                                                                      //  DefaultButton(
                                                                              //   text: "order",

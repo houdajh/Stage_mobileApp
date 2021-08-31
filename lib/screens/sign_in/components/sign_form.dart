@@ -82,20 +82,7 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: getProportionateScreenHeight(30)),
           Row(
             children: [
-              Checkbox(
-                value: remember,
-                activeColor: kPrimaryColor,
-                onChanged: (value) {
-                  setState(() {
-                    remember = value;
-                  });
-                },
-              ),
-              Text("Remember me",
-              style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.bold,
-          ),),
+              
               Spacer(),
               GestureDetector(
                 onTap: () => Navigator.pushNamed(

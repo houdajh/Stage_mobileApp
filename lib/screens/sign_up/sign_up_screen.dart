@@ -8,7 +8,12 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sign Up"),
+        backgroundColor: Colors.grey[800],
+        title: Text("Sign Up" ,
+        style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),),
       ),
       body:Container(
         decoration: BoxDecoration(

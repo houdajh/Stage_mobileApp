@@ -8,12 +8,12 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(items: [
-      Image(image: NetworkImage("https://image.freepik.com/vecteurs-libre/affiche-pour-promotion-produits-cosmetiques-hydratants-nourrissants_1441-229.jpg",),
+      Image(image: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj1IWFKsF7hOu1dGC6zQdLgMTV62afeZ-Avw&usqp=CAU",),
         width:double.maxFinite,
         fit: BoxFit.cover,),
-      Image(image: NetworkImage("https://dailygeekshow.com/wp-content/uploads/2019/11/une-promos-gearbest-1024x538.jpg"),
+      Image(image: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCxCt5L-PYZV8OBS2fknWZ6nH4oxcTcFLyOg&usqp=CAU"),
         width: double.infinity,fit: BoxFit.cover,),
-      Image(image: NetworkImage("https://media.istockphoto.com/photos/cosmetics-set-with-promotion-frame-picture-id854034416"),
+      Image(image: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHVnabCQZ2FW7NPU7lYQDwypg4WUVSYdKcJvey6xHTAZi7d23uViJQnl7qI8lyT8VUyhw&usqp=CAU"),
         width: double.infinity,
         fit: BoxFit.cover,),
     ], options: CarouselOptions(

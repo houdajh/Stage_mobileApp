@@ -3,11 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/product_card.dart';
 import 'package:shop_app/models/Categories.dart';
-import 'package:shop_app/screens/home/components/section_title.dart';
 
 import '../../models/Product.dart';
-import '../../size_config.dart';
-import 'components/body.dart';
+
 import 'components/custom_app_bar.dart';
 
 class CategoriesLsiteProduits extends StatelessWidget {
@@ -20,15 +18,7 @@ class CategoriesLsiteProduits extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xFFF5F6F9),
       appBar: CustomAppBar(),
-      body: //Body(categorie: agrs.categorie),
-      // ListView.builder(
-      //     itemCount: demoProducts.length,
-      //     itemBuilder: (BuildContext context, int index) {
-      //       print("#############################");
-      //       print(agrs.categorie.title);
-      //       return ProductCard(product: demoProducts[index]);
-      //     }
-      // ),
+      body: 
       Container(
         child: SingleChildScrollView(
           child: StreamBuilder(

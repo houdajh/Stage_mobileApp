@@ -10,16 +10,17 @@ class Body extends StatelessWidget {
       children: [
         SizedBox(height: SizeConfig.screenHeight * 0.04),
         Image.asset(
-          "assets/images/success.png",
+          "assets/images/success.jpg",
           height: SizeConfig.screenHeight * 0.4, //40%
         ),
         SizedBox(height: SizeConfig.screenHeight * 0.08),
         Text(
           "Login Success",
+          
           style: TextStyle(
             fontSize: getProportionateScreenWidth(30),
+            color: Colors.red[900],
             fontWeight: FontWeight.bold,
-            color: Colors.black,
           ),
         ),
         Spacer(),
