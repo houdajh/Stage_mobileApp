@@ -103,7 +103,8 @@ class ProductCard extends StatelessWidget {
                               color: Colors.red,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text("DISCOUNT",style: TextStyle(color: Colors.white),),
+                                child: Text("\$"+product.price.toString(),style: TextStyle(color: Colors.white),),
+                               
                               )
                           ),
                         ],
@@ -111,41 +112,6 @@ class ProductCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                // const SizedBox(height: 10),
-                // Text(
-                //   product.title,
-                //   style: TextStyle(color: Colors.black),
-                //   maxLines: 2,
-                // ),
-                // Text(
-                //   "\$${product.price}",
-                //   style: TextStyle(
-                //     fontSize: getProportionateScreenWidth(18),
-                //     fontWeight: FontWeight.w600,
-                //     color: kPrimaryColor,
-                //   ),
-                // ),
-                // InkWell(
-                //   borderRadius: BorderRadius.circular(50),
-                //   onTap: () {},
-                //   child: Container(
-                //     padding: EdgeInsets.all(getProportionateScreenWidth(8)),
-                //     height: getProportionateScreenWidth(28),
-                //     width: getProportionateScreenWidth(28),
-                //     decoration: BoxDecoration(
-                //       color: product.isFavourite
-                //           ? kPrimaryColor.withOpacity(0.15)
-                //           : kSecondaryColor.withOpacity(0.1),
-                //       shape: BoxShape.circle,
-                //     ),
-                //     child: SvgPicture.asset(
-                //       "assets/icons/Heart Icon_2.svg",
-                //       color: product.isFavourite
-                //           ? Color(0xFFFF4848)
-                //           : Color(0xFFDBDEE4),
-                //     ),
-                //   ),
-                // ),
                 Container(
                   transform: Matrix4.translationValues(0.0, -15.0, 0.0),
                   child: Padding(
@@ -160,7 +126,7 @@ class ProductCard extends StatelessWidget {
                           children: [
                             Text("\$"+product.price.toString(),style: TextStyle(color: Colors.red[500],fontWeight: FontWeight.bold,fontSize: 20),),
                             SizedBox(width: 8,),
-                            Text(product.price.toString(),style: TextStyle(color: Colors.grey,fontSize: 15,
+                            Text(product.oldPrice.toString(),style: TextStyle(color: Colors.grey,fontSize: 15,
                                 decoration: TextDecoration.lineThrough),),
                           ],
                         ),//le prix old and new
@@ -171,25 +137,27 @@ class ProductCard extends StatelessWidget {
                         ),
                         Container(
 
-                            child: Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.star,color: Colors.red,size: 15,),
-                                    Icon(Icons.star,color: Colors.red,size: 15,),
-                                    Icon(Icons.star,color: Colors.red,size: 15,),
-                                    Icon(Icons.star,color: Colors.red,size: 15,),
-                                    Icon(Icons.star_border,color: Colors.red,size: 15,)
-                                  ],
-                                ),
-                                Text(product.oldPrice.toString()+' reviews',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w900,
-                                    color: Colors.grey[500],
-                                  ),),
-                              ],
-                            )),
+                            //child: Row(
+                             /// children: [
+                              //  Row(
+                                //  children: [
+                                 //   Icon(Icons.star,color: Colors.red,size: 15,),
+                                 //   Icon(Icons.star,color: Colors.red,size: 15,),
+                                 //   Icon(Icons.star,color: Colors.red,size: 15,),
+                                  //  Icon(Icons.star,color: Colors.red,size: 15,),
+                                  //  Icon(Icons.star_border,color: Colors.red,size: 15,)
+                                //  ],
+                              //  ),
+                                
+                               // Text(product.oldPrice.toString()+' reviews',
+                             //     style: TextStyle(
+                                //    fontSize: 15,
+                                  //  fontWeight: FontWeight.w900,
+                                 //   color: Colors.grey[500],
+                                //  ),),
+                             // ],
+                            //)
+                            ),
 
                       ],
                     ),

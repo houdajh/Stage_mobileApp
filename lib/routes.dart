@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:shop_app/account/account_screen.dart';
 import 'package:shop_app/screens/cart/cart_screen.dart';
 import 'package:shop_app/screens/complete_profile/complete_profile_screen.dart';
 import 'package:shop_app/screens/details/components/form_screen.dart';
@@ -35,6 +36,7 @@ final Map<String, WidgetBuilder> routes = {
   ProfileScreen.routeName: (context) => ProfileScreen(),
   PastTripsView.routeName: (context) => PastTripsView(),
   CategoriesLsiteProduits.routeName: (context) => CategoriesLsiteProduits(),
+  AccountScreen.routeName : (context) =>  AccountScreen(),
   
   
 

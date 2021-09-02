@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +39,7 @@ class Products with ChangeNotifier {
     FirebaseFirestore.instance.collection("produits").snapshots().listen((event) {
       event.docs.forEach((element) {
         print("****************");
+        print(element.data()['countlikes']);
         print(element.data()['oldPrix']);
         productsList.add(Product(
               id: element.id,
