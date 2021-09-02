@@ -13,8 +13,8 @@ class DetailPage extends StatelessWidget {
         ModalRoute.of(context).settings.arguments;
     return Scaffold(
       backgroundColor: Color(0xFFF5F6F9),
-     // appBar: CustomAppBar(rating: agrs.product.oldPrice),
-      body: Body(product: agrs.product),
+      // appBar: CustomAppBar(rating: agrs.product.oldPrice),
+      body: BodyScreen(product: agrs.product),
     );
   }
 }
