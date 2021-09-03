@@ -9,7 +9,7 @@ class AccountScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           // elevation: 0,
-          backgroundColor: Colors.grey[800],
+          backgroundColor: Colors.white,
           title: Text(
             "my account",
             style: TextStyle(

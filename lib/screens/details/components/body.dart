@@ -31,6 +31,7 @@ class BodyScreen extends StatefulWidget {
 
 class _BodyScreen extends State<BodyScreen> {
   final Product product;
+  var resultCount;
   final _auth = FirebaseAuth.instance;
 
   List<String> ListID = [];
@@ -44,36 +45,21 @@ class _BodyScreen extends State<BodyScreen> {
   CollectionReference likesCounterRef =
       FirebaseFirestore.instance.collection("likesCounter");
 
-  var likes;
-  var fetchedValue;
+ 
+  
 
   _BodyScreen({Key key, @required this.product});
 
-  @override
-  void initState() {
-    fetchLikeValue();
-  }
 
-  Future<bool> fetchLikeValue() async {
-    this.fetchedValue = await FirebaseFirestore.instance
-        .collection('likes')
-        .doc(userData.uid)
-        .get()
-        .then((value) => value.data()[product.id]);
-
-    print(this.fetchedValue);
-    return fetchedValue;
-  }
+  
 
   Future<bool> onLikeButtonTapped(bool isLiked) async {
-    print("samiii");
-    print("************** ${isLiked}");
-    likesCounterRef
+     if(!isLiked){
+       likesCounterRef
         .doc(product.id)
         .set(
           {
             userData.uid: !isLiked,
-            "uid": product.id,
           },
           SetOptions(merge: true),
         )
@@ -81,6 +67,23 @@ class _BodyScreen extends State<BodyScreen> {
             //  ListID.add(userData.uid)
             )
         .catchError((error) => print("Failed to modify like : $error"));
+     }else{
+       likesCounterRef
+        .doc(product.id)
+        .set(
+          {
+            userData.uid: FieldValue.delete(),
+          },
+          SetOptions(merge: true),
+        )
+        .then((value) => print("likesCounter")
+            //  ListID.add(userData.uid)
+            )
+        .catchError((error) => print("Failed to modify like : $error"));
+     }
+          
+
+        
 
     likesRef
         .doc(userData.uid)
@@ -95,6 +98,8 @@ class _BodyScreen extends State<BodyScreen> {
             )
         .catchError((error) => print("Failed to modify like : $error"));
 
+        
+    
     return !isLiked;
   }
 
@@ -122,14 +127,7 @@ class _BodyScreen extends State<BodyScreen> {
       print(
           "voila: ${value.data().length}"); // Access your after your get the data
     });
-    FirebaseFirestore.instance
-        .collection('produits')
-        .doc(product.id)
-        .get()
-        .then((value) {
-      likes = value.data()["countlikes"];
-      // Access your after your get the data
-    });
+    
 
     return SingleChildScrollView(
       child: Stack(
@@ -222,13 +220,52 @@ class _BodyScreen extends State<BodyScreen> {
                       ),
                       child: LikeButton(
                         onTap: onLikeButtonTapped,
-                        isLiked: fetchedValue,
+                       
                         likeBuilder: (bool isLiked) {
-                          return Icon(
+                            return
+            FutureBuilder(
+               future: likesRef.get(),
+                      // ignore: missing_return
+                      builder: (context ,snapshot){
+                          FirebaseFirestore
+                            .instance
+                            .collection('likes')
+                           .doc(userData.uid)
+                           .get()
+                           .then(
+          (value) {
+             isLiked = value.data()[product.id]; 
+             }
+             );
+             FirebaseFirestore.instance
+    .collection('likesCounter')
+    .doc(product.id)
+    .get()
+    .then((value) {
+      postRef.doc(product.id)
+      .set(
+        {"countlikes" : value.data().length,}
+        ,SetOptions(merge : true),)
+      .then((value) => print("countlikes")
+      //  ListID.add(userData.uid)
+      ) .catchError((error) => print("Failed to modify like : $error"));
+      
+      print("voila: ${value.data().length}" ) ;// Access your after your get the data
+    
+     });
+               return Icon(
                             Icons.favorite,
-                            color: isLiked ? Colors.red : Colors.grey,
+                            color: isLiked 
+                                ? Colors.red
+                                : Colors.grey,
                             size: 30,
                           );
+             
+                      }
+            
+            );
+                   
+        
                         },
                       ),
                     ),
@@ -371,4 +408,6 @@ class _BodyScreen extends State<BodyScreen> {
       ),
     );
   }
+
+  
 }

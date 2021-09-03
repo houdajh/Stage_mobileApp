@@ -53,22 +53,17 @@ class wishlist extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   print("waittt wish");
                 }
-                
-                FirebaseFirestore.instance
+                if(snapshot.hasData){
+                  FirebaseFirestore.instance
                       .collection('likes')
                       .doc(userData.uid)
                       .get()
                       .then((value) {
                         demoProducts=[];
                           snapshot.data.docs.forEach((element) {
-                            
-                         print("elemlmmmllll ${userData.uid}");
-                           print(value.data()[element.id.toString()]);
                         
                               elemId = element.id.toString();
-                              print("fffffffff $x");
-                         print("elemId ${elemId}");
-                      
+                              
                           
                           if(value.data()[element.id.toString()]){
                             print("salam");
@@ -91,6 +86,8 @@ class wishlist extends StatelessWidget {
                         
                         }
                         );
+                }
+                
                 
                  
                
