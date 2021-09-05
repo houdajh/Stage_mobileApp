@@ -28,11 +28,7 @@ class wishlist extends StatelessWidget {
   var x;
   
   User userData=  FirebaseAuth.instance.currentUser;
-  Future getPosts() async{
-    var firestore =FirebaseFirestore.instance;
-    QuerySnapshot qn = await firestore.collection("likesCounter").where(userData.uid , isEqualTo: true) .get();
-    return qn.docs;
-  }
+  
   @override
   Widget build(BuildContext context) {
     
