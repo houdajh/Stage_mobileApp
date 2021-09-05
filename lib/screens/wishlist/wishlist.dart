@@ -6,8 +6,6 @@ import 'package:shop_app/components/coustom_bottom_nav_bar.dart';
 import 'package:shop_app/components/product_card.dart';
 import 'package:shop_app/models/Product.dart';
 import 'package:shop_app/screens/details/components/custom_app_bar.dart';
-import 'package:shop_app/screens/wishlist/wishlist_empty.dart';
-import 'package:shop_app/screens/wishlist/wishlist_full.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../enums.dart';
@@ -112,6 +110,8 @@ class wishlist extends StatelessWidget {
               }),
         ),
       ),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu:MenuState.favourite )
     );
+    
   }
 }

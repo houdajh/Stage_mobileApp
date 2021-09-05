@@ -62,14 +62,14 @@ class ProductSearchCard extends StatelessWidget {
                                 ],
                               ),
                           //botton like
-                              Container(
-                                width: 100,
-                                  color: Colors.redAccent.withOpacity(0.5),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Text("DISCOUNT",style: TextStyle(color: Colors.white,fontSize: 11),textAlign: TextAlign.center,),
-                                  )
-                              ),
+                             // Container(
+                                //width: 100,
+                                  //color: Colors.redAccent.withOpacity(0.5),
+                                 // child: Padding(
+                                   // padding: const EdgeInsets.all(3.0),
+                                    //child: Text("DISCOUNT",style: TextStyle(color: Colors.white,fontSize: 11),textAlign: TextAlign.center,),
+                                 // )
+                              //),
                             ],
                           ),
                         ),
@@ -85,7 +85,7 @@ class ProductSearchCard extends StatelessWidget {
                             children: [
                               Text("\$"+product.price.toString(),style: TextStyle(color: Colors.red[500],fontWeight: FontWeight.bold,fontSize: 20),),
                               SizedBox(width: 8,),
-                              Text(product.price.toString(),style: TextStyle(color: Colors.grey,fontSize: 15,
+                              Text(product.oldPrice.toString(),style: TextStyle(color: Colors.grey,fontSize: 15,
                                   decoration: TextDecoration.lineThrough),),
 
                             ],
@@ -102,12 +102,11 @@ class ProductSearchCard extends StatelessWidget {
                   bottom: 2,
                     right: -15,
                     child: MaterialButton(
-                      color: Colors.white,
-                      shape: CircleBorder(),
+                      
                       onPressed: (){
 
                       },
-                      child: Icon(Icons.favorite_border,color:Colors.red[400]),))
+                      ))
               ],
             ),
           ),

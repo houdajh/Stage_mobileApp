@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shop_app/models/Product.dart';
 import 'package:shop_app/screens/details/components/product_images.dart';
+import 'package:shop_app/screens/home/home_screen.dart';
 
 import '../../../size_config.dart';
 import '../details_screen.dart';
@@ -134,7 +135,7 @@ class FormScreenState extends State<FormScreen> {
       },
     );
   }
-  int _n = 0;
+  int _n = 1;
   void add() {
   setState(() {
     _n++;
@@ -142,7 +143,7 @@ class FormScreenState extends State<FormScreen> {
 }
   void minus() {
   setState(() {
-    if (_n != 0) 
+    if (_n != 1) 
       _n--;
   });
 }
@@ -162,8 +163,7 @@ class FormScreenState extends State<FormScreen> {
 
             new FloatingActionButton(
               onPressed: minus,
-              child: new Icon(
-               const IconData(0xe15b, fontFamily: 'MaterialIcons'),
+              child: new Icon(Icons.remove, 
                  color: Colors.black),
               backgroundColor: Colors.white,),
           ],
@@ -272,7 +272,7 @@ class FormScreenState extends State<FormScreen> {
   ).then((_) {
     print("success!");
   });
-
+  Navigator.pushNamed(context, HomeScreen.routeName);
                   },
                 )
               ],

@@ -80,24 +80,7 @@ class ProductCard extends StatelessWidget {
                         ],
 
                       ),
-                          Positioned(
-                              bottom: 35,
-                              right: -20,
-                              child: MaterialButton(
-                                color: Colors.white,
-                                shape: CircleBorder(),
-                                onPressed: (){
-
-                                },
-                              // child: Icon(Icons.favorite_border,color:Colors.red[400]),
-                               child: SvgPicture.asset(
-              "assets/icons/Heart Icon_2.svg",
-              color: Color(0xFFFF4848) ,
-              height: getProportionateScreenWidth(16),
-            ),
-           
-                               )
-                               ),//botton like
+                         
                                 
                           Container(
                               color: Colors.red,
@@ -130,34 +113,12 @@ class ProductCard extends StatelessWidget {
                                 decoration: TextDecoration.lineThrough),),
                           ],
                         ),//le prix old and new
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0,bottom: 10),
-                          child: Text(product.description,style: TextStyle(fontSize:  15.0,fontWeight: FontWeight.w300,fontStyle:FontStyle.italic,height: 1.5,),maxLines: 5,
-                            overflow: TextOverflow.ellipsis,),
-                        ),
-                        Container(
-
-                            //child: Row(
-                             /// children: [
-                              //  Row(
-                                //  children: [
-                                 //   Icon(Icons.star,color: Colors.red,size: 15,),
-                                 //   Icon(Icons.star,color: Colors.red,size: 15,),
-                                 //   Icon(Icons.star,color: Colors.red,size: 15,),
-                                  //  Icon(Icons.star,color: Colors.red,size: 15,),
-                                  //  Icon(Icons.star_border,color: Colors.red,size: 15,)
-                                //  ],
-                              //  ),
-                                
-                               // Text(product.oldPrice.toString()+' reviews',
-                             //     style: TextStyle(
-                                //    fontSize: 15,
-                                  //  fontWeight: FontWeight.w900,
-                                 //   color: Colors.grey[500],
-                                //  ),),
-                             // ],
-                            //)
-                            ),
+                       // Padding(
+                         // padding: const EdgeInsets.only(top: 8.0,bottom: 10),
+                         // child: Text(product.description,style: TextStyle(fontSize:  15.0,fontWeight: FontWeight.w300,fontStyle:FontStyle.italic,height: 1.5,),maxLines: 5,
+                          //  overflow: TextOverflow.ellipsis,),
+                      //  ),
+                       
 
                       ],
                     ),

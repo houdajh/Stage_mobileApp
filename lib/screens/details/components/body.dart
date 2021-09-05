@@ -6,20 +6,9 @@ import 'package:shop_app/models/Product.dart';
 import 'package:shop_app/screens/details/components/form_screen.dart';
 import 'package:shop_app/size_config.dart';
 import 'package:like_button/like_button.dart';
-import 'comment.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'product_images.dart';
 
-/*class Body extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: BodyScreen(),
-      ),
-    );
-  }
-}*/
 
 class BodyScreen extends StatefulWidget {
   final Product product;
@@ -33,8 +22,8 @@ class _BodyScreen extends State<BodyScreen> {
   final Product product;
   var resultCount;
   final _auth = FirebaseAuth.instance;
-
-  List<String> ListID = [];
+  var like;
+  List<int> ListID = [];
 
   User userData = FirebaseAuth.instance.currentUser;
 
@@ -64,7 +53,6 @@ class _BodyScreen extends State<BodyScreen> {
           SetOptions(merge: true),
         )
         .then((value) => print("likesCounter")
-            //  ListID.add(userData.uid)
             )
         .catchError((error) => print("Failed to modify like : $error"));
      }else{
@@ -77,7 +65,6 @@ class _BodyScreen extends State<BodyScreen> {
           SetOptions(merge: true),
         )
         .then((value) => print("likesCounter")
-            //  ListID.add(userData.uid)
             )
         .catchError((error) => print("Failed to modify like : $error"));
      }
@@ -94,7 +81,6 @@ class _BodyScreen extends State<BodyScreen> {
           SetOptions(merge: true),
         )
         .then((value) => print("object")
-            //  ListID.add(userData.uid)
             )
         .catchError((error) => print("Failed to modify like : $error"));
 
@@ -120,13 +106,14 @@ class _BodyScreen extends State<BodyScreen> {
             SetOptions(merge: true),
           )
           .then((value) => print("countlikes")
-              //  ListID.add(userData.uid)
               )
           .catchError((error) => print("Failed to modify like : $error"));
+         like =value.data().length;
+         print(ListID[0]);
+          
 
-      print(
-          "voila: ${value.data().length}"); // Access your after your get the data
     });
+    
     
 
     return SingleChildScrollView(
@@ -171,7 +158,7 @@ class _BodyScreen extends State<BodyScreen> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 14, vertical: 5),
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: Colors.transparent,
                                 borderRadius: BorderRadius.circular(14),
                               ),
                               child: Row(
@@ -227,6 +214,7 @@ class _BodyScreen extends State<BodyScreen> {
                future: likesRef.get(),
                       // ignore: missing_return
                       builder: (context ,snapshot){
+                        
                           FirebaseFirestore
                             .instance
                             .collection('likes')
@@ -247,12 +235,20 @@ class _BodyScreen extends State<BodyScreen> {
         {"countlikes" : value.data().length,}
         ,SetOptions(merge : true),)
       .then((value) => print("countlikes")
-      //  ListID.add(userData.uid)
       ) .catchError((error) => print("Failed to modify like : $error"));
       
-      print("voila: ${value.data().length}" ) ;// Access your after your get the data
+      
+      // Access your after your get the data
     
      });
+     print(like);
+     if(isLiked ==null){
+       return Icon(
+                            Icons.favorite,
+                            color:Colors.grey,
+                            size: 30,
+                          );
+     }
                return Icon(
                             Icons.favorite,
                             color: isLiked 
@@ -319,7 +315,7 @@ class _BodyScreen extends State<BodyScreen> {
                             ],
                           ), //le prix old and new
                           Text(
-                            " likes: ${product.countlikes}",
+                            " likes: ${like}",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
@@ -363,26 +359,26 @@ class _BodyScreen extends State<BodyScreen> {
                       padding: EdgeInsets.all(getProportionateScreenWidth(15)),
                       width: getProportionateScreenWidth(64),
                       height: getProportionateScreenWidth(64),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFFE6E6),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          bottomLeft: Radius.circular(20),
-                        ),
-                      ),
-                      child: IconButton(
-                        icon: SvgPicture.asset(
-                          "assets/icons/Conversation.svg",
-                          color: Color(0xFFFF4848),
-                          height: getProportionateScreenWidth(16),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => TestMe()),
-                          );
-                        },
-                      ),
+                    //  decoration: BoxDecoration(
+                    //    color: Color(0xFFFFE6E6),
+                     //   borderRadius: BorderRadius.only(
+                      //    topLeft: Radius.circular(20),
+                       //   bottomLeft: Radius.circular(20),
+                       // ),
+                     // ),
+                     // child: IconButton(
+                     //   icon: SvgPicture.asset(
+                        //  "assets/icons/Conversation.svg",
+                       //   color: Color(0xFFFF4848),
+                       //   height: getProportionateScreenWidth(16),
+                      //  ),
+                     //   onPressed: () {
+                         // Navigator.push(
+                          //  context,
+                          //  MaterialPageRoute(builder: (context) => TestMe()),
+                         // );
+                        //},
+                      //),
                     ),
                   ),
                   DefaultButton(
