@@ -41,6 +41,7 @@ dependencies:
   google_sign_in: ^5.0.5
   firebase_storage: ^10.0.1
   alert_dialog: ^1.0.0
+  flutter_material_color_picker: ^1.1.0+2
 
 dev_dependencies:
   flutter_test:

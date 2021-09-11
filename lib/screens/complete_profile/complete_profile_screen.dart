@@ -8,9 +8,30 @@ class CompleteProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up'),
+       // elevation: 0,
+        backgroundColor: Colors.grey[350],
+        title: Text("Sign Up",
+         style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
-      body: Body(),
+      body:Stack(
+        children :[
+          
+          Positioned.fill(child: Image.asset(
+            "assets/images/back3.jpg",
+            fit : BoxFit.cover,
+            color: Colors.black12,
+            colorBlendMode: BlendMode.darken,
+
+          )),
+          Body(),
+        ] 
+          
+        )
+      
     );
   }
 }

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:shop_app/components/custom_surfix_icon.dart';
 import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/components/form_error.dart';
+import 'package:shop_app/components/redButton.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/otp/otp_screen.dart';
-import 'package:shop_app/screens/profile/components/profile_pic.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -68,7 +68,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           buildAddressFormField(),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
-          DefaultButton(
+          RedButton(
             text: "continue",
             press: () async {
               var formdata = formstate.currentState;

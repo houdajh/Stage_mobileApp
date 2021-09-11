@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 class Product {
   final String id;
@@ -24,9 +25,9 @@ class Product {
 }
 
 // Our demo Products
-
 List<Product>  demoProducts = [];
 List<Product>  demoWish = [];
+List<Product>  demoCateg = [];
 
 const String description =
     "Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …Wireless Controller for PS4™ gives you what you want in your gaming from over precision control your games to sharing …";
@@ -35,7 +36,8 @@ const String description =
 
 class Products with ChangeNotifier {
   List<Product> productsList = [];
-
+    
+  
   getDataProduits() async{
     FirebaseFirestore.instance.collection("produits").snapshots().listen((event) {
       event.docs.forEach((element) {

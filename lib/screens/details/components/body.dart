@@ -1,13 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shop_app/components/default_button.dart';
+import 'package:shop_app/components/redButton.dart';
 import 'package:shop_app/models/Product.dart';
 import 'package:shop_app/screens/details/components/form_screen.dart';
 import 'package:shop_app/size_config.dart';
 import 'package:like_button/like_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'product_images.dart';
+import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 
 
 class BodyScreen extends StatefulWidget {
@@ -22,7 +25,7 @@ class _BodyScreen extends State<BodyScreen> {
   final Product product;
   var resultCount;
   final _auth = FirebaseAuth.instance;
-  var like;
+  var like =0;
   List<int> ListID = [];
 
   User userData = FirebaseAuth.instance.currentUser;
@@ -44,6 +47,7 @@ class _BodyScreen extends State<BodyScreen> {
 
   Future<bool> onLikeButtonTapped(bool isLiked) async {
      if(!isLiked){
+       
        likesCounterRef
         .doc(product.id)
         .set(
@@ -56,6 +60,7 @@ class _BodyScreen extends State<BodyScreen> {
             )
         .catchError((error) => print("Failed to modify like : $error"));
      }else{
+       
        likesCounterRef
         .doc(product.id)
         .set(
@@ -121,6 +126,28 @@ class _BodyScreen extends State<BodyScreen> {
         children: <Widget>[
           ProductImages(product: product),
           // Icon(Icons.favorite, color: Colors.black , size: 80.0 ),
+          
+                          ImageSlideshow(
+                        //Image.asset(product.images[0]),
+                        width: double.infinity,
+                        height: 372,
+                        initialPage: 0,
+                        indicatorColor:product.images.length > 1?Colors.redAccent : Colors.grey[100],
+                        indicatorBackgroundColor: Colors.grey,
+                        children: [
+                          for ( var e in product.images )
+                            Container(
+
+                              child: Column(
+                                children: [
+                                  Image(image: NetworkImage(e),fit: BoxFit.cover,width: double.infinity,height: 350,),
+                                  Container(color: Colors.white,)
+                                ],
+                              ),
+                            ),
+                        ],
+
+                      ),
           Container(
               width: double.infinity,
               height: size.height * 0.5,
@@ -207,8 +234,8 @@ class _BodyScreen extends State<BodyScreen> {
                       ),
                       child: LikeButton(
                         onTap: onLikeButtonTapped,
-                       
                         likeBuilder: (bool isLiked) {
+                          
                             return
             FutureBuilder(
                future: likesRef.get(),
@@ -225,6 +252,7 @@ class _BodyScreen extends State<BodyScreen> {
              isLiked = value.data()[product.id]; 
              }
              );
+             
              FirebaseFirestore.instance
     .collection('likesCounter')
     .doc(product.id)
@@ -241,7 +269,6 @@ class _BodyScreen extends State<BodyScreen> {
       // Access your after your get the data
     
      });
-     print(like);
      if(isLiked ==null){
        return Icon(
                             Icons.favorite,
@@ -249,6 +276,7 @@ class _BodyScreen extends State<BodyScreen> {
                             size: 30,
                           );
      }
+     
                return Icon(
                             Icons.favorite,
                             color: isLiked 
@@ -263,6 +291,27 @@ class _BodyScreen extends State<BodyScreen> {
                    
         
                         },
+            //  likeCount: like,
+              
+               // countBuilder: (int count, bool isLiked, String text) {
+               //   print(like);
+         //   var color = isLiked ? Colors.deepPurpleAccent : Colors.grey;
+          //  Widget result;
+          //  if (count == 0) {
+           //   result = Text(
+           //     "love",
+            //    style: TextStyle(color: Colors.black),
+            //  );
+          ////  } else
+            //  result = Text(
+             //   text,
+            //  /  style: TextStyle(
+              //    color: Colors.black,
+                //  fontSize: 30,
+                //  ),
+              //);
+           // return result;
+         // },
                       ),
                     ),
                   ),
@@ -314,11 +363,11 @@ class _BodyScreen extends State<BodyScreen> {
                               ),
                             ],
                           ), //le prix old and new
-                          Text(
-                            " likes: ${like}",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
+                          //Text(
+                          //  " likes: ${like}",
+                         //   style: TextStyle(
+                            ////    fontSize: 16, fontWeight: FontWeight.bold),
+                        //  ),
                           SizedBox(
                             height: 3,
                           ),
@@ -381,7 +430,7 @@ class _BodyScreen extends State<BodyScreen> {
                       //),
                     ),
                   ),
-                  DefaultButton(
+                  RedButton(
                     text: 'ORDER',
                     press: () {
                       // A MaterialPageRoute is a  modal route that replaces the entire screen

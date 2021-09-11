@@ -10,7 +10,7 @@ class SignInScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
        // elevation: 0,
-        backgroundColor: Colors.grey[800],
+        backgroundColor: Colors.grey[350],
         title: Text("Sign In",
          style: TextStyle(
             color: Colors.black,
@@ -18,21 +18,19 @@ class SignInScreen extends StatelessWidget {
           ),
         ),
       ),
-      body:Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-               Colors.red ,
-              Colors.grey[800],
-              Colors.white,
-              Colors.white,
-             
-            ],
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft
-          )
-        ),
-         child: Body(),
+      body:Stack(
+        children :[
+          
+          Positioned.fill(child: Image.asset(
+            "assets/images/back3.jpg",
+            fit : BoxFit.cover,
+            color: Colors.black12,
+            colorBlendMode: BlendMode.darken,
+
+          )),
+          Body(),
+        ] 
+          
         )
       
     );

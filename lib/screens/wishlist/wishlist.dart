@@ -53,7 +53,7 @@ class wishlist extends StatelessWidget {
                       .doc(userData.uid)
                       .get()
                       .then((value) {
-                        demoProducts=[];
+                        demoWish=[];
                           snapshot.data.docs.forEach((element) {
                         
                               elemId = element.id.toString();
@@ -61,7 +61,7 @@ class wishlist extends StatelessWidget {
                           
                           if(value.data()[element.id.toString()]){
                             print("salam");
-                            demoProducts.add(
+                            demoWish.add(
                               Product(id: element.id.toString(),
                                   images: element["images"],
                                   colors: [],
@@ -72,9 +72,9 @@ class wishlist extends StatelessWidget {
                                   price: element["prix"].toDouble(),
                                   description: element["description"])
                                   ); 
-                                  print("tol dyal demo f if ${demoProducts.length}");
+                                  print("tol dyal demo f if ${demoWish.length}");
                           }
-                          print("tol dyal demo ${demoProducts.length}");
+                          print("tol dyal demo ${demoWish.length}");
                         
                       });
                         
@@ -95,10 +95,10 @@ class wishlist extends StatelessWidget {
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          print("ee ${demoProducts.length}");
-                          return ProductCard(product: demoProducts[index]);
+                          print("ee ${demoWish.length}");
+                          return ProductCard(product: demoWish[index]);
                         },
-                        itemCount: demoProducts.length,
+                        itemCount: demoWish.length,
                       ),
                     ),
                   ],

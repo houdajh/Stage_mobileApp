@@ -29,14 +29,17 @@ class CategoriesLsiteProduits extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator(color: Colors.red,));
                 }
-                demoProducts=[];
+                demoCateg=[];
                 snapshot.data.docs.forEach((element) {
-                  if(element['categorieId']==agrs.categorie.id){
-                   // print("--------------->>>>>>");
-                   // print(element["categorieId"]);
+                  print("*************");
+                  print(element["categorieId"]);
+                  print((agrs.categorie.id).toString());
+                  if(element['categorieId']== (agrs.categorie.id).toString()){
+                    print("--------------->>>>>>");
+                    print(element["categorieId"]);
                     print("=====>>>>>>");
                   //  print(agrs.categorie.id);
-                          demoProducts.add(
+                          demoCateg.add(
                               Product(id: element.id.toString(),
                                   images: element["images"],
                                   colors: [],
@@ -58,9 +61,9 @@ class CategoriesLsiteProduits extends StatelessWidget {
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          return ProductCard(product: demoProducts[index]);
+                          return ProductCard(product: demoCateg[index]);
                         },
-                        itemCount: demoProducts.length,
+                        itemCount: demoCateg.length,
                       ),
                     ),
                   ],

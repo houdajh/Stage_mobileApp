@@ -49,7 +49,7 @@ class Body extends StatelessWidget {
                 Text(
                   "Welcome Back",
                   style: TextStyle(
-                    color: Colors.black87,
+                    color: Colors.black,
                     fontSize: getProportionateScreenWidth(28),
                     fontWeight: FontWeight.bold,
                   ),
@@ -58,7 +58,7 @@ class Body extends StatelessWidget {
                   "Sign in with your email and password  \nor continue with Google",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-            color: Colors.black87,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
             fontSize: 15
           ),

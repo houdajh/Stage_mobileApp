@@ -26,6 +26,7 @@ class PopularProducts extends StatelessWidget {
                 oldPrice: element.data()['oldPrix'].toDouble(),
                 price: element["prix"].toDouble(),
                 description: element["description"]));
+
             //print("****************");
             //print(element.data()['oldPrix'].toDouble());
           });

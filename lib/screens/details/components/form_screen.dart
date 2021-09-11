@@ -1,11 +1,20 @@
 
+
+library flutter_material_color_picker;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shop_app/components/redButton.dart';
 import 'package:shop_app/models/Product.dart';
+import 'package:shop_app/screens/details/components/color/material_color_picker.dart';
 import 'package:shop_app/screens/details/components/product_images.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
+  
+
+export 'color/material_color_picker.dart' show MaterialColorPicker;
+export 'color/circle_color.dart' show CircleColor;
+export 'color/colors.dart' show materialColors, accentColors, fullMaterialColors;
 
 import '../../../size_config.dart';
 import '../details_screen.dart';
@@ -23,8 +32,10 @@ class FormScreen extends StatefulWidget {
 class FormScreenState extends State<FormScreen> {
   
   String _name;
+  String _desc;
   String _email;
   String _adress;
+   String _size;
   String _phoneNumber;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -113,7 +124,68 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
+
+
   
+   Widget _buildDesc() {
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: 'Description',
+        hintText: 'Customize your product'
+        ),
+      maxLength:150,
+      //keyboardType: TextInputType.visiblePassword,
+      validator: (String value) {
+        
+
+        return null;
+      },
+      onSaved: (String value) {
+        _desc = value;
+      },
+    );
+  }
+
+Widget _buildCol() {
+  return MaterialColorPicker(
+    onColorChange: (Color color) {
+        // Handle color changes
+    },
+    selectedColor: Colors.red,
+    colors: [
+        Colors.red,
+        Colors.deepOrange,
+        Colors.yellow,
+        Colors.lightGreen,
+        Colors.blue,
+        Colors.purple,
+        Colors.brown,
+        Colors.blueGrey,
+        Colors.grey,
+    ]
+   // print(selectedColor)
+  );
+}
+  
+
+ Widget _buildSize() {
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: 'Size',
+        hintText: 'L , M , S , XL , XXL ?'
+        ),
+      maxLength:150,
+      //keyboardType: TextInputType.visiblePassword,
+      validator: (String value) {
+        
+
+        return null;
+      },
+      onSaved: (String value) {
+        _size = value;
+      },
+    );
+  }
 
   Widget _buildPhoneNumber() {
     return TextFormField(
@@ -159,7 +231,7 @@ class FormScreenState extends State<FormScreen> {
               backgroundColor: Colors.white,),
 
             new Text('$_n',
-                style: new TextStyle(fontSize: 60.0)),
+                style: new TextStyle(fontSize: 40.0)),
 
             new FloatingActionButton(
               onPressed: minus,
@@ -201,7 +273,34 @@ class FormScreenState extends State<FormScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                Text(
+                  "Welcome ",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: getProportionateScreenWidth(28),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "Please fill the form and customize your product to place the order ",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: getProportionateScreenWidth(20),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  " ",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: getProportionateScreenWidth(20),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 _buildName(),
+                _buildDesc(),
+                 _buildSize(),
+                _buildCol(),
                 _buildEmail(),
                 _buildAdress(),
                // _builURL(),
@@ -210,19 +309,11 @@ class FormScreenState extends State<FormScreen> {
                 _buildCounter(),
                 SizedBox(height: 100),
                  
-                RaisedButton(
-                  color: Colors.redAccent,
-                  splashColor: Colors.yellow[200],
-                  animationDuration: Duration(seconds: 2),
-                  shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(18.0),
-                  side: BorderSide(color: Colors.black),
-                    ),
-                  child: Text(
+                RedButton(
+                  text:
                     'Submit',
-                    style: TextStyle(color: Colors.black, fontSize: 50),
-                  ),
-                  onPressed: () {
+                  
+                  press: () {
                     if (!_formKey.currentState.validate()) {
                       return;
                     }
@@ -262,6 +353,8 @@ class FormScreenState extends State<FormScreen> {
                     orderRef.add({
     '${widget.value.id}' :{ 
       'title': widget.value.title,
+      'description': _desc,
+      'size': _size,
       'address': _adress,
       'email': _email,
       'name': _name,

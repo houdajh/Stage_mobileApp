@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_app/models/model.dart';
 import 'package:shop_app/screens/sign_in/sign_in_screen.dart';
 
-String Lname, address, email, Fname, name, phone;
 List userData;
 
 class Profile extends StatefulWidget {
@@ -14,19 +14,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  getData() async {
-    print("============");
-    CollectionReference usersRef =
-        FirebaseFirestore.instance.collection("users");
-    DocumentSnapshot user =
-        await usersRef.doc(FirebaseAuth.instance.currentUser.uid).get();
-    email = user['email'];
-    Lname = user['last_name'];
-    Fname = user['first_name'];
-    name = Fname + ' ' + Lname;
-    address = user['address'];
-    phone = user['phone_number'];
-  }
+ 
 
   delete() async {
     User user = FirebaseAuth.instance.currentUser;
@@ -49,9 +37,7 @@ class _ProfileState extends State<Profile> {
                 child: ListBody(children: <Widget>[
               GestureDetector(
                 child: Text("delete", style: TextStyle(color: Colors.red)),
-                onTap: () {
-                 
-                },
+                onTap: () {},
               ),
               Padding(padding: EdgeInsets.all(8)),
               GestureDetector(
@@ -67,7 +53,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    getData();
     return Scaffold(
       body: SafeArea(
           child: Column(
@@ -106,9 +91,9 @@ class _ProfileState extends State<Profile> {
             height: 100,
             width: 100,
             decoration: BoxDecoration(
-                //borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                shape: BoxShape.circle,
-                 ),
+              //borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              shape: BoxShape.circle,
+            ),
           ),
         ),
       ],
