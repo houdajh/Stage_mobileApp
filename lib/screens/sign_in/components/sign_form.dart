@@ -1,8 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/custom_surfix_icon.dart';
 import 'package:shop_app/components/form_error.dart';
-import 'package:shop_app/components/redButton.dart';
 import 'package:shop_app/helper/keyboard.dart';
 import 'package:shop_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:shop_app/screens/login_success/login_success_screen.dart';
@@ -83,35 +83,48 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: getProportionateScreenHeight(30)),
           Row(
             children: [
-              
               Spacer(),
               GestureDetector(
                 onTap: () => Navigator.pushNamed(
                     context, ForgotPasswordScreen.routeName),
                 child: Text(
                   "Forgot Password",
-                 
-                  style: TextStyle(decoration: TextDecoration.underline,
-                   color: Colors.black,),
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: Colors.black,
+                  ),
                 ),
               )
             ],
           ),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(20)),
-          RedButton(
+          DefaultButton(
             text: "Continue",
             press: () async {
               if (formstate.currentState.validate()) {
                 formstate.currentState.save();
                 UserCredential resp = await signIn();
-                if (resp != null) {
-                  Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-                  print("===============");
-                  print(resp.user.email);
-                  print("===============");
-                  // if all are valid then go to success screen
+                var usersRef = FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(FirebaseAuth.instance.currentUser.uid);
 
+                if (resp != null) {
+                  usersRef.get().then((docSnapshot) => {
+                        if (docSnapshot.exists)
+                          {
+                            Navigator.pushNamed(
+                                context, LoginSuccessScreen.routeName)
+                          }
+                        else
+                          {
+                            AwesomeDialog(
+                                context: context,
+                                title: "Error",
+                                body: Text("No user found for that email"))
+                              ..show()
+                          }
+                      });
                 } else {
                   print("error");
                 }
@@ -147,9 +160,6 @@ class _SignFormState extends State<SignForm> {
       },
       decoration: InputDecoration(
         labelText: "Password",
-        labelStyle: TextStyle(
-          color: Colors.black87
-        ),
         hintText: "Enter your password",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
@@ -183,19 +193,18 @@ class _SignFormState extends State<SignForm> {
       },
       decoration: InputDecoration(
         labelText: "Email",
-        labelStyle: TextStyle(
-          color: Colors.black
-        ),
         hintText: "Enter your email",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg",),
+        suffixIcon: CustomSurffixIcon(
+          svgIcon: "assets/icons/Mail.svg",
+        ),
       ),
       style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
+        color: Colors.black87,
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 }

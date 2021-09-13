@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_app/components/custom_surfix_icon.dart';
 import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/components/form_error.dart';
-import 'package:shop_app/components/redButton.dart';
+import 'package:shop_app/models/model.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/otp/otp_screen.dart';
 import '../../../constants.dart';
@@ -16,6 +16,7 @@ class CompleteProfileForm extends StatefulWidget {
 }
 
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
+  Users user = new Users();
   GlobalKey<FormState> formstate = new GlobalKey<FormState>();
   final List<String> errors = [];
   String firstName;
@@ -32,9 +33,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       CollectionReference likesRef =
           FirebaseFirestore.instance.collection("likes");
       await likesRef.doc(FirebaseAuth.instance.currentUser.uid).set(
-        {
-          element.id: false
-          },SetOptions(merge: true),
+        {element.id: false},
+        SetOptions(merge: true),
       );
     });
   }
@@ -68,7 +68,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           buildAddressFormField(),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
-          RedButton(
+          DefaultButton(
             text: "continue",
             press: () async {
               var formdata = formstate.currentState;
@@ -89,6 +89,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                 "email": FirebaseAuth.instance.currentUser.email
               });
               await getUID();
+              user.getData();
               print("done");
               await Navigator.pushNamed(context, HomeScreen.routeName);
             },

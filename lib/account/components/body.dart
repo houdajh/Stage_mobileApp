@@ -14,15 +14,12 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
- 
-
   delete() async {
-    User user = FirebaseAuth.instance.currentUser;
-    user.delete();
     CollectionReference usersRef =
         FirebaseFirestore.instance.collection("users");
     await usersRef.doc(FirebaseAuth.instance.currentUser.uid).delete();
     print('Account deleted');
+    Navigator.pop(context, false);
     Navigator.of(context).popUntil((route) => route.isFirst);
     Navigator.pushReplacementNamed(context, SignInScreen.routeName);
   }
@@ -37,7 +34,10 @@ class _ProfileState extends State<Profile> {
                 child: ListBody(children: <Widget>[
               GestureDetector(
                 child: Text("delete", style: TextStyle(color: Colors.red)),
-                onTap: () {},
+                onTap: () {
+                  print("deleted");
+                  delete();
+                },
               ),
               Padding(padding: EdgeInsets.all(8)),
               GestureDetector(
