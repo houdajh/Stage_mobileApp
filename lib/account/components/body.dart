@@ -41,7 +41,7 @@ class _ProfileState extends State<Profile> {
               ),
               Padding(padding: EdgeInsets.all(8)),
               GestureDetector(
-                  child: Text("annuler", style: TextStyle(color: Colors.grey)),
+                  child: Text("Cancel", style: TextStyle(color: Colors.grey)),
                   onTap: () {
                     print("annuler");
                     Navigator.pop(context, false);
