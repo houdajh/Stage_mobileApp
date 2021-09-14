@@ -22,11 +22,11 @@ class HomeHeader extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 26.0),),
           ),
-          IconBtnWithCounter(
-            svgSrc: "assets/icons/Cart Icon.svg",
-            numOfitem: 3,
-            press: () => Navigator.pushNamed(context, CartScreen.routeName),
-          ),
+         // IconBtnWithCounter(
+           // svgSrc: "assets/icons/Cart Icon.svg",
+           // numOfitem: 3,
+          //  press: () => Navigator.pushNamed(context, CartScreen.routeName),
+         // ),
           Padding(
             padding: const EdgeInsets.only(left: 12.0),
             child: IconBtnWithCounter(

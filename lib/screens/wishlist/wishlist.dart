@@ -68,8 +68,8 @@ class wishlist extends StatelessWidget {
                                   categorieId: element["categorieId"],
                                   title: element["titre"],
                                   countlikes: element["countlikes"],
-                                  oldPrice: element.data()['oldPrix'].toDouble(),
-                                  price: element["prix"].toDouble(),
+                                  oldPrice: element.data()['oldPrix'],
+                                  price: element["prix"],
                                   description: element["description"])
                                   ); 
                                   print("tol dyal demo f if ${demoWish.length}");

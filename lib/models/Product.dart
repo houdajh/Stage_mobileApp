@@ -7,7 +7,7 @@ class Product {
   final String title, description,categorieId;
   final List<dynamic> images;
   final List<Color> colors;
-  final double oldPrice, price;
+  final String oldPrice, price;
   final int countlikes;
 
   Product( {
