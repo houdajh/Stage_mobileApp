@@ -1,5 +1,6 @@
 library flutter_material_color_picker;
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -336,6 +337,13 @@ class FormScreenState extends State<FormScreen> {
                       }, //SetOptions(merge : true),
                     ).then((_) {
                       print("success!");
+                      AwesomeDialog(
+                          dialogType: DialogType.SUCCES,
+                          context: context,
+                          title: "Success",
+                          body: Text(
+                              "Your order has been successfully submitted !"))
+                        ..show();
                     });
                     Navigator.pushNamed(context, HomeScreen.routeName);
                   },
