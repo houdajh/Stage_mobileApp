@@ -9,8 +9,6 @@ https://user-images.githubusercontent.com/74733847/134817017-e2e25e8e-5d4b-426e-
 
 
 
-## :camera: Images
-* ***Authentification***
-![1]()
+
 
 
