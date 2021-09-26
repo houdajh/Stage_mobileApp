@@ -12,7 +12,7 @@ https://user-images.githubusercontent.com/74733847/134817017-e2e25e8e-5d4b-426e-
 
 **Free Support:**
 
-If you liked our work and you want to support us, follow us on other platforms. :heart: 
+If you liked our work and you want to support us, follow us . :heart: 
 
 ##
 
