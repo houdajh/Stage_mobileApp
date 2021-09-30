@@ -25,7 +25,7 @@ If you liked our work and you want to support us, follow us on github,and rate i
 
  **:thumbsup: Your support means a lot. It keeps us motivated .**
 
-
+Ce lien contient le code du dashboard https://github.com/houdajh/intellcapdash
 
 
 
