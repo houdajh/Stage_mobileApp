@@ -1,6 +1,6 @@
 # customization of fashion articles using a mobile app
 
-Le présent projet synthétise le travail effectué dans le cadre de notre stage de première année effectué au sein d’ **(INTELLCAP)**  tout au long de notre période de stage qui était de deux mois (la partie mobile). 
+Le  projet synthétise le travail effectué dans le cadre de notre stage de première année effectué au sein d’ **(INTELLCAP)**  tout au long de notre période de stage qui était de deux mois (la partie mobile). 
 
 :boy:**Réaliser par** :point_right: <a href="https://github.com/houdajh"> **Houda Jouhar** </a> & <a href="https://github.com/aicha-mudr"> **Aicha Moudar** </a> &<a href="https://github.com/AdnaneEz-zaim"> **Adnane Ezzaim** </a>
 
